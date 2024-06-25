@@ -1,0 +1,92 @@
+<ion-header>
+  
+  <div class="header">
+    <ion-title>APPLICATION NAME</ion-title>
+      <img class="ImgMenu" id="BtnMenu" src="./../../../assets/icon/menu.png">
+  </div>
+  <div id="modal" class="MenuModal">
+    <div class="MenuModalContent">
+      <div class="FlexInline" id="AddClient">
+        <img class="ImgContact" src="./../../../assets/icon/AddUser.png">
+        <h3 class="InformationContact color">AGREGAR CLIENTES</h3>
+      </div>
+      <div class="FlexInline" id="AddRecipes">
+        <img class="ImgContact" src="./../../../assets/icon/AddFood.png">
+        <h3 class="InformationContact color">AGREGAR RECETA</h3>
+      </div>
+    </div>
+  </div>
+</ion-header>
+<ion-content>
+  <main>
+    <div class="DivRecents">
+      <h2>RECIENTES</h2>
+      <div (click)="InformationClient()" class="ContentContact">
+        <img class="ImgContact" src="./../../../assets/icon/Avatar.png">
+        <div class="InformationContact">
+          <h5>marco antonio alvarez ordoñez</h5>
+          <p>4525203328</p>
+        </div>
+      </div>
+      <div (click)="InformationClient()" class="ContentContact">
+        <img class="ImgContact" src="./../../../assets/icon/Avatar.png">
+        <div class="InformationContact">
+          <h5>marco antonio alvarez ordoñez</h5>
+          <p>4525203328</p>
+        </div>
+      </div>
+      <div (click)="InformationClient()" class="ContentContact">
+        <img class="ImgContact" src="./../../../assets/icon/Avatar.png">
+        <div class="InformationContact">
+          <h5>marco antonio alvarez ordoñez</h5>
+          <p>4525203328</p>
+        </div>
+      </div>
+    </div>
+    <div class="DivContact">
+      <h2>CLIENTES</h2>
+      <div>
+        <div (click)="InformationClient()" class="ContentContact">
+          <img class="ImgContact" src="./../../../assets/icon/Avatar.png">
+          <div class="InformationContact">
+            <h5>marco antonio alvarez ordoñez</h5>
+            <p>4525203328</p>
+          </div>
+        </div>
+        <div (click)="InformationClient()" class="ContentContact">
+          <img class="ImgContact" src="./../../../assets/icon/Avatar.png">
+          <div class="InformationContact">
+            <h5>marco antonio alvarez ordoñez</h5>
+            <p>4525203328</p>
+          </div>
+        </div>
+        <div (click)="InformationClient()" class="ContentContact">
+          <img class="ImgContact" src="./../../../assets/icon/Avatar.png">
+          <div class="InformationContact">
+            <h5>marco antonio alvarez ordoñez</h5>
+            <p>4525203328</p>
+          </div>
+        </div>
+        <div (click)="InformationClient()" class="ContentContact">
+          <img class="ImgContact" src="./../../../assets/icon/Avatar.png">
+          <div class="InformationContact">
+            <h5>marco antonio alvarez ordoñez</h5>
+            <p>4525203328</p>
+          </div>
+        </div>
+        <div (click)="InformationClient()" class="ContentContact">
+          <img class="ImgContact" src="./../../../assets/icon/Avatar.png">
+          <div class="InformationContact">
+            <h5>marco antonio alvarez ordoñez</h5>
+            <p>4525203328</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="DivButtons">
+      <ion-button>Regresar</ion-button>
+      <ion-button>Siguiente</ion-button>
+    </div>
+  </main>
+
+</ion-content>

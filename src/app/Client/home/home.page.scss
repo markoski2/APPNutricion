@@ -1,0 +1,147 @@
+.backgroundHome{
+    background: #d6d6d6;
+    height: 100%;
+    width: 100%;
+}
+.card{
+    width: 95%;
+    border-radius: 10px;
+    background: white;
+    margin: 10px 0;
+}
+.flex{
+    display: flex;
+}
+.black{
+    color: white;
+}
+h3{
+    font-family: 'Times New Roman', Times, serif;
+}
+.ImgMenu{
+    background-image: url('./../../../assets/icon/menu.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    background-position: center;;
+}
+.flexAround{
+    justify-content: space-around;
+    align-items: center;
+}
+.ImgLogo{
+    width: 70px;
+    height: 70px;
+    
+}
+.flexCenter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.flexJustifyCenter{
+    display: flex;
+    justify-content: center;
+}
+p{
+    color: black;
+}
+//CARD RECIPES DAYS
+ion-toolbar{
+    width: 100%;
+}
+ion-segment-button,ion-label{
+    background: white;
+}
+ion-label{
+    color: black;
+}
+.backgroundBlack{
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0), #000000de 85%);
+    position: absolute;
+    width: 95%;
+    height: 140px;
+}
+.ImgRicepesCad{
+    height: 140px;
+    width: 100%;
+}
+.MarginBotton{
+    margin-bottom: 15px;
+}
+//EXTRA
+.flexwrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.margin2{
+    margin: 10px;
+}
+.margin1{
+    margin: 5px 0;
+}
+.ImgExtra{
+    width: 60px;
+    height: 60px;
+}
+.marginleft{
+    margin-left: 10px;
+}
+//MODAL
+.MenuModal{
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    background: rgb(0,0,0,50%);
+    width: 100%;
+    height: 100%;
+    transform: translateX(200%);
+    transition: all 0.5s ;
+}
+.MenuModalContent{
+    position: absolute;
+    width: 230px;
+    height: 300px;
+    background: white;
+    right: 0;
+    top: 0;
+}
+ion-header{
+    padding: 0;
+    margin: 0;
+}
+.FlexInline{
+    display: inline-flex;
+    margin: 10px;
+}
+.InformationContact{
+    margin-left: 10px;
+}
+.Btnclose{
+    margin: 5px 20px 0 0;
+    display: flex;
+    justify-content: flex-end;
+}
+.red{
+    color: red;
+}
+.font1{
+    font-size: 50px;
+    margin: 0;
+}
+.font2{
+    font-size: 20px;
+}
+@media (prefers-color-scheme: dark){
+    .backgroundHome{
+        background: black;
+    }
+    ion-segment-button,ion-label,.card{
+        background: #D6D6D6;
+    }
+    .ImgMenu{
+        background-image: url('./../../../assets/icon/menuwhite.png');
+    }
+}

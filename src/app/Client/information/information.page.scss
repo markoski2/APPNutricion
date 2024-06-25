@@ -1,0 +1,31 @@
+.graph{
+    width: 90%;
+    height: 300px;
+}
+.DivExtraInformation{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 95%;
+    background: #dddddd;
+    display: flex;
+    flex-direction: column;
+    margin: 40px auto auto auto;
+    padding-bottom: 30px;
+}
+.MarginLeft{
+    margin: 0 20px;
+}
+.flexBetween{
+    display: flex;
+    justify-content: space-between;
+}
+.h3Tittle{
+    margin: 10px auto;
+    color: black;
+}
+p{
+    color: black;
+}
+.marginGraph{
+    margin: 30px 0;
+}

@@ -1,0 +1,142 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>MealTime</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h2 class="marginmain">Dias de la semana</h2>
+  <div class="marginmain">
+    <div class="FlexInline widthContentOption FlexSpace">
+      <p>Lunes</p>
+      <ion-toggle (ionChange)="EnableBtnChooseRecipes($event,'Recipes1')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes()" id="Recipes1" size="small">Escoger Receta</ion-button>
+    </div>
+    <div class="FlexInline widthContentOption FlexSpace">
+      <p>Martes</p>
+      <ion-toggle (ionChange)="EnableBtnChooseRecipes($event,'Recipes2')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes()"  id="Recipes2" size="small">Escoger Receta</ion-button>
+    </div>
+    <div class="FlexInline widthContentOption FlexSpace">
+      <p>Miercoles</p>
+      <ion-toggle (ionChange)="EnableBtnChooseRecipes($event,'Recipes3')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes()" id="Recipes3" size="small">Escoger Receta</ion-button>
+    </div>
+    <div class="FlexInline widthContentOption FlexSpace">
+      <p>Jueves</p>
+      <ion-toggle (ionChange)="EnableBtnChooseRecipes($event,'Recipes4')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes()" id="Recipes4" size="small">Escoger Receta</ion-button>
+    </div>
+    <div class="FlexInline widthContentOption FlexSpace">
+      <p>Viernes</p>
+      <ion-toggle (ionChange)="EnableBtnChooseRecipes($event,'Recipes5')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes()" id="Recipes5" size="small">Escoger Receta</ion-button>
+    </div>
+    <div class="FlexInline widthContentOption FlexSpace">
+      <p>Sabado</p>
+      <ion-toggle (ionChange)="EnableBtnChooseRecipes($event,'Recipes6')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes()" id="Recipes6" size="small">Escoger Receta</ion-button>
+    </div>
+    <div class="FlexInline widthContentOption FlexSpace">
+      <p>Domingo</p>
+      <ion-toggle (ionChange)="EnableBtnChooseRecipes($event,'Recipes7')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes()" id="Recipes7" size="small">Escoger Receta</ion-button>
+    </div>
+  </div>
+  <div class="CenterBtn">
+    <ion-button id="BtnPage2" shape="round">Cancelar</ion-button>
+    <ion-button id="BtnPageSave" shape="round">Guardar</ion-button>
+  </div>
+  <div><!--MODAL -->
+    <ion-modal [isOpen]="ModalOpenMealTime" >
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button color="danger" (click)="cancel()">Cancelar</ion-button>
+            </ion-buttons>
+            <ion-title>Lunes</ion-title>
+            <ion-buttons slot="end">
+              <ion-button color="success" (click)="confirm()" [strong]="true">Confirmar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <h2>Horarios de comida</h2>
+          <div class="Flex flexAround" >
+            <div class="FlexColumn flexBetween">
+              <ion-checkbox (ionChange)="opcion($event,'Breakfast')">Desayuno</ion-checkbox>
+              <ion-checkbox (ionChange)="opcion($event,'Lunch')">Almuerzo</ion-checkbox>
+              <ion-checkbox (ionChange)="opcion($event,'Meal')">Comida</ion-checkbox>
+            </div>
+            <div class="FlexColumn flexBetween">
+              <ion-checkbox (ionChange)="opcion($event,'Snack')">Merienda</ion-checkbox>
+              <ion-checkbox (ionChange)="opcion($event,'Dinner')">Cena</ion-checkbox>
+              <ion-checkbox (ionChange)="opcion($event,'Refreshment')">Refrigerio</ion-checkbox>
+            </div>
+          </div>
+          <div class="marginmain MarginTop">
+            <div id="Breakfast" class="Flex widthContentOption flexBetween none">
+              <p>Desayuno</p>
+              <ion-button (click)="OpenModal(1)" class="BtnOpc" shape="round">{{breakfast}}</ion-button>
+            </div>
+            <div id="Lunch" class="Flex widthContentOption flexBetween none">
+              <p>Almuerzo</p>
+              <ion-button (click)="OpenModal(2)" class="BtnOpc" shape="round">{{lunch}}</ion-button>
+            </div>
+            <div id="Meal" class="Flex widthContentOption flexBetween none">
+              <p>Comida</p>
+              <ion-button (click)="OpenModal(3)" class="BtnOpc" shape="round">{{meal}}</ion-button>
+            </div>
+            <div id="Snack" class="Flex widthContentOption flexBetween none">
+              <p>Merienda</p>
+              <ion-button (click)="OpenModal(4)" class="BtnOpc" shape="round">{{snack}}</ion-button>
+            </div>
+            <div id="Dinner" class="Flex widthContentOption flexBetween none">
+              <p>Cena</p>
+              <ion-button (click)="OpenModal(5)" class="BtnOpc" shape="round">{{dinner}}</ion-button>
+            </div>
+            <div id="Refreshment" class="Flex widthContentOption flexBetween none">
+              <p>Refrigerio</p>
+              <ion-button (click)="OpenModal(6)" class="BtnOpc" shape="round">{{refreshment}}</ion-button>
+            </div>
+            <ion-modal [isOpen]="ModalOpen" #modal >
+              <ng-template>
+                <ion-content>
+                  <ion-toolbar>
+                    <ion-title>RECETAS</ion-title>
+                    <ion-buttons slot="end">
+                      <ion-button color="danger" (click)="CloseModal()">Cerrar</ion-button>
+                    </ion-buttons>
+                  </ion-toolbar>
+                  <ion-list>
+                    <div class="Flex">
+                      <input class="InputSearch" placeholder="Buscar Receta" type="search">
+                      <div class="DivImgSearch"><img class="ImgSearch" src="./../../../assets/icon/search.png"></div>
+                    </div>
+                    <div id="ContentRecipes">
+                      @for (item of Array; track $index) {
+                        <ion-item (click)="SaveRecipes(item)">
+                          <ion-label>
+                            <h2>{{item.Name}}</h2>
+                          </ion-label>
+                        </ion-item>
+                      }
+                    </div>
+                  </ion-list>
+                  <div class="CenterBtn">
+                    <ion-button>Regresar</ion-button>
+                    <ion-button>Siguiente</ion-button>
+                  </div>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+    <div>
+      
+    </div>
+  </div><!--MODAL END-->
+</ion-content>

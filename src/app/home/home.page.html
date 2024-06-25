@@ -1,20 +1,16 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content>
+  <div class="main">
+    <div class="divlogo" >
+      <h1>APPLICATION NAME</h1>
+      <img class="imgLogo" src="./../../assets/icon/Logo.png">
+    </div>
+    <div class="divinputs" >
+      <input id="InputUser" placeholder="USUARIO" type="text">
+      <input id="InputPassword" placeholder="CONTRASEÑA" type="password">
+      <ion-button id="BtnLogin">INICIAR SESIÓN</ion-button>
+    </div>
   </div>
 </ion-content>
+<ion-footer>
+  <img class="ImgChat" (click)="presentAlert()" id="ButtonChat" src="./../../assets/icon/Chat.png">
+</ion-footer>

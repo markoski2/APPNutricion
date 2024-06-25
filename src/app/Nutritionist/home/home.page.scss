@@ -1,0 +1,74 @@
+main{
+    margin-left: 30px;
+}
+.header{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px;
+}
+.ImgMenu{
+    width: 30px;
+}
+.color{
+    color: black;
+}
+//contact
+.ContentContact{
+    display: inline-flex;
+    width: 300px;
+    height: 90px;
+    align-items: center;
+}
+.ImgContact{
+    width: 62px;
+    height: 62px;
+}
+.InformationContact{
+    margin-left: 10px;
+}
+h5{
+    margin: 10px 0 0 0;
+}
+p{
+    margin: 5px 0 0 0;
+}
+.DivButtons{
+    display: flex;
+    justify-content: space-around;
+}
+//MODAL
+.MenuModal{
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    background: rgb(0,0,0,50%);
+    width: 100%;
+    height: 100%;
+    transform: translateX(200%);
+    transition: all 0.5s ;
+}
+.MenuModalContent{
+    position: absolute;
+    width: 210px;
+    height: 200px;
+    background: white;
+    right: 0;
+    top: 0;
+}
+ion-header{
+    padding: 0;
+    margin: 0;
+}
+.FlexInline{
+    display: inline-flex;
+    margin: 10px;
+}
+@media (prefers-color-scheme: dark){
+    ion-header,.MenuModalContent{
+        background: #757575;
+    }
+    .color{
+        color: white;
+    }
+}
+

@@ -1,0 +1,66 @@
+<ion-header >
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="homeNutritionist"></ion-back-button>
+    </ion-buttons>
+    <div class="DivHeader">
+      <ion-title>Crear Receta</ion-title>
+      <img class="IconAdd" id="Add"  src="./../../../assets/icon/Add.png">
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div>
+    <div class="marginMain">
+      <h1>Información de la receta</h1>
+      <div class="FlexInline Center">
+        <img class="ImgPhoto" src="./../../../assets/icon/Logo.png">
+        <div class="marginLeft">
+          <h3>Agregar una foto (OPCIONAL)</h3>
+          <ion-button shape="round">Tomar Foto</ion-button>
+        </div>
+      </div>
+    </div>
+    <div class="marginMain">
+      <ion-input class="marginUpDown widthInputs" autocomplete="false" label="Nombre de la receta" label-placement="floating"
+      fill="solid" placeholder="Nombre de la receta"></ion-input>
+      <div >
+        <h5>INGREDIENTES:</h5>
+        <div id="ingredients">
+          <div >
+            <label >*</label>
+            <input autocomplete="off" class="InputIngredients" id="cosa">
+          </div>
+        </div>
+        <div class="MarginAddIngredients" >
+          <h3 class="H5Ingredient" (click)="createInputIngredients()">Agregar Ingrediente</h3>
+        </div>
+      </div>
+      <div>
+        <h5>PROCEDIMIENTO:</h5>
+        <textarea id="TextAreaProcedure" class="TextArea"></textarea>
+      </div>
+      <div class="marginDown">
+        <h2>Información Extra</h2>
+        <div class="ContentInputInformationExtra">
+          <div class="FlexInline widthDivInputsExtraInformation">
+            <p>Proteina: </p>
+            <ion-input id="Object" class="widthInputsExtraInformation" type="number" autocomplete=false
+              fill="solid"></ion-input>
+          </div>
+          <div class="FlexInline widthDivInputsExtraInformation">
+            <p>Carbohidrato: </p>
+            <ion-input id="ActualWeight" class="widthInputsExtraInformation" type="number" autocomplete=false
+              fill="solid"></ion-input>
+          </div>
+          <div class="FlexInline widthDivInputsExtraInformation">
+            <p>Grasas: </p>
+            <ion-input id="Height" class="widthInputsExtraInformation" type="number" autocomplete=false
+              fill="solid"></ion-input>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

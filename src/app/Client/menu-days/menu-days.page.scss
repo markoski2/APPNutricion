@@ -1,0 +1,81 @@
+//CARD RECIPES DAYS
+ion-toolbar{
+    width: 100%;
+}
+ion-segment-button,ion-label{
+    background: white;
+}
+ion-label{
+    color: black;
+}
+.backgroundBlack{
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0), #000000de 85%);
+    position: absolute;
+    width: 95%;
+    height: 140px;
+    max-width: 400px;
+}
+.ImgRicepesCad{
+    height: 140px;
+    width: 100%;
+}
+.MarginBotton{
+    margin-bottom: 15px;
+}
+.background{
+    background: #dddddd;
+}
+.card{
+    width: 95%;
+    border-radius: 10px;
+    background: white;
+    margin: 15px 0;
+    max-width: 400px;
+}
+.flexJustifyCenter{
+    display: flex;
+    justify-content: center;
+}
+.marginleft{
+    margin-left: 10px;
+}
+p{
+    color: black;
+}
+.FlexCenter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h3{
+    color: white;
+}
+
+@media screen and (min-width:600px) {
+    .FlexCenter{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .card{
+        width: 95%;
+        border-radius: 10px;
+        background: white;
+        margin: 15px;
+        max-width: 400px;
+    }
+}
+
+@media (prefers-color-scheme: dark){
+    .background{
+        background: black;
+    }
+    .card{
+        background: #dddddd;
+    }
+    ion-segment-button,ion-label{
+        background: #dddddd;
+    }
+}

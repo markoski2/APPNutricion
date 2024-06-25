@@ -1,0 +1,79 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Menu de la semana</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="FrontPage">
+    <div class="backgroundBlack">
+      <h3 class="marginleft">RECIPES NAME</h3>
+    </div>
+    <div>
+      <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
+    </div>
+  </div>
+  <div>
+    <ion-segment value="all">
+      <ion-segment-button id="Carousel1" value="all">
+        <ion-label >Ingredients</ion-label>
+      </ion-segment-button>
+      <ion-segment-button id="Carousel2" value="procedure">
+        <ion-label>Procedure</ion-label>
+      </ion-segment-button>
+      <ion-segment-button id="Carousel3" value="extra">
+        <ion-label>Extra</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <div id="Carousel" class="Carousel flex">
+      <div  class="ContentCarousel">
+        <p class="FontP">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+          Laboriosam culpa quas obcaecati voluptate? Minus quod fuga ipsa laboriosam, 
+          consectetur at tenetur enim corrupti, inventore minima qui debitis earum, 
+          magni deleniti.
+        </p>
+      </div>
+      <div class="ContentCarousel">
+        <p class="FontP">
+          
+          Laboriosam culpa quas obcaecati voluptate? Minus quod fuga ipsa laboriosam, 
+          consectetur at ma qui debitis earum, 
+          magni deleniti.
+        </p>
+      </div>
+      <div class="ContentCarousel">
+        <h3>Informacion Nutrimental</h3>
+        <div class="flexWrap ">
+          <div class="margin1 flex radius padding">
+            <img class="imgCircle"  src="./../../../assets/icon/fire.png">
+            <div class="margin2 ">
+              <p class="font1">Carbohydrate</p>
+              <p class="font1"> 45g</p>
+            </div>
+          </div>
+          <div class="margin1 flex radius padding">
+            <img class="imgCircle"  src="./../../../assets/icon/arm.png">
+            <div class="margin2">
+              <p class="font1">Protein</p>
+              <p class="font1"> 145g</p>
+            </div>
+          </div>
+          <div class="margin1 flex radius padding">
+            <img class="imgCircle" src="./../../../assets/icon/fat.png">
+            <div class="margin2">
+              <p class="font1">Fat</p>
+              <p class="font1"> 425g</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+  
+</ion-content>
