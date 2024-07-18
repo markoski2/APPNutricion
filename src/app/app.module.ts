@@ -8,10 +8,17 @@ import { NgxCaptureService } from 'ngx-capture';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+//import { Firestore} from 'firebase-admin/firestore';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAnalytics, provideAnalytics, ScreenTrackingService } from '@angular/fire/analytics';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },BaseChartDirective,NgxCaptureService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },BaseChartDirective,
+    NgxCaptureService, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAnalytics(() => getAnalytics()), ScreenTrackingService, provideFirestore(() => getFirestore())],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

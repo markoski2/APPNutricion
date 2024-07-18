@@ -13,17 +13,17 @@ main{
     color: black;
 }
 //contact
-.ContentContact{
+::ng-deep .ContentContact{
     display: inline-flex;
     width: 300px;
     height: 90px;
     align-items: center;
 }
-.ImgContact{
+::ng-deep .ImgContact{
     width: 62px;
     height: 62px;
 }
-.InformationContact{
+::ng-deep .InformationContact{
     margin-left: 10px;
 }
 h5{
@@ -50,7 +50,7 @@ p{
 .MenuModalContent{
     position: absolute;
     width: 210px;
-    height: 200px;
+    height: 300px;
     background: white;
     right: 0;
     top: 0;
@@ -62,6 +62,49 @@ ion-header{
 .FlexInline{
     display: inline-flex;
     margin: 10px;
+}
+.margin1{
+    margin: 5px 0;
+}
+//Btn
+#BtnBack,#ModalRecipeBtnBack{
+    display: none;
+}
+//Modal Recipes
+.InputSearch{
+    height: 50px;
+    width: 70%;
+    border-radius: 20px 0 0 20px;
+    background: #D6D6D6;
+    font-size: 15px;
+    padding: 10px 10px 10px 15PX;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    border-width: 2px 0px 2px 2px;
+    border-style: solid;
+    border-color: black;
+    outline: none;
+    color: black;
+}
+.ImgSearch{
+    width: 30px;
+    height: 30px;
+    
+}
+.DivImgSearch{
+    height: 50px;
+    width: 50px;
+    background: #D6D6D6;
+    border-radius: 0px 20px 20px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px 2px 2px 0px;
+    border-style: solid;
+    border-color: black;
+}
+.Flex{
+    display: flex;
 }
 @media (prefers-color-scheme: dark){
     ion-header,.MenuModalContent{

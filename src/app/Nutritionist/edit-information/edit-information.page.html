@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="homeNutritionist"></ion-back-button>
+    </ion-buttons>
+    <div class="DivHeader">
+      <ion-title>Editar Receta</ion-title>
+      <img class="IconEdit" id="Edit"  src="./../../../assets/icon/Edit.png">
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Editar Información</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <main id="main">
+    <div class="flex1">
+      <div class="margin3">
+        <ion-input id="InputName" class="marginUpDown widthInputs" autocomplete="false" label="Nombre de la receta" label-placement="floating"
+        fill="solid" placeholder="Nombre de la receta" value="{{Recipes.Name}}"></ion-input>
+      </div>
+      <div class="margin3">
+        <h4 class="margin3">Ingredientes</h4>
+        <textarea id="InputIngredients" class="TextIngredients">{{Recipes.Ingredinets}}</textarea>
+      </div>
+      <div class="margin3">
+        <h4 class="margin3">Intrucciones</h4>
+        <textarea id="InputProcedure" class="TextProcedure">{{Recipes.Procedure}}</textarea>
+      </div>
+    </div>
+    <div class="DivExtraInformation">
+      <h3 class="margin3">Informacion Nutrimental</h3>
+        <div class="flexWrap ">
+          <div class="margin1 flex radius padding">
+            <img class="imgCircle"  src="./../../../assets/icon/fire.png">
+            <div class="margin2 ">
+              <p class="font1">Carbohidratos</p>
+              <input id="InputCarbohydrate" type="number" class="font1 inputExtra" value="{{Recipes.Carbohydrate}}">
+            </div>
+          </div>
+          <div class="margin1 flex radius padding">
+            <img class="imgCircle"  src="./../../../assets/icon/arm.png">
+            <div class="margin2">
+              <p class="font1">Proteinas</p>
+              <input id="InputProtein" type="number" class="font1 inputExtra" value="{{Recipes.Protein}}">
+            </div>
+          </div>
+          <div class="margin1 flex radius padding">
+            <img class="imgCircle" src="./../../../assets/icon/fat.png">
+            <div class="margin2">
+              <p class="font1">Grasas</p>
+              <input id="InputFat" type="number" class="font1 inputExtra" value="{{Recipes.Fat}}">
+            </div>
+          </div>
+        </div>
+    </div>
+  </main>
+</ion-content>

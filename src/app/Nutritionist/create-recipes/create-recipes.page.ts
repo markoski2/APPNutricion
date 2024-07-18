@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { InterRecipes } from 'src/app/Interface/interfaces.service';
+import { FirebaseService } from 'src/app/Service/firebase.service';
+import { GenerationUserService } from 'src/app/Service/generation-user.service';
 
 @Component({
   selector: 'app-create-recipes',
@@ -9,13 +12,32 @@ import { ToastController } from '@ionic/angular';
 })
 export class CreateRecipesPage implements OnInit {
 
-  constructor(private toastController: ToastController,private router:Router) { }
+  flag:boolean=true
+
+  constructor(
+    private toastController: ToastController,
+    private router:Router,
+    private Generate:GenerationUserService,
+    private Firebase:FirebaseService) { }
 
   ngOnInit() {
     document.getElementById("Add")?.addEventListener("click",()=>{
-      this.presentToast()
-      this.router.navigate(['/homeNutritionist'])
+      if(this.flag){
+        this.flag=false
+        this.GetInformationRecipe()
+      }
+      
     })
+  }
+  Ingredients:string=""
+  Recipe:InterRecipes={
+    IdRecipes:0,
+    Name: "",
+    Ingredinets: "",
+    Procedure: "",
+    Carbohydrate: 0,
+    Fat: 0,
+    Protein:0
   }
 
   public createInputIngredients(){
@@ -52,5 +74,70 @@ export class CreateRecipesPage implements OnInit {
 
     await toast.present();
   }
+  async MissingDates() {
+    const toast = await this.toastController.create({
+      message: 'Faltan Datos por Rellenar',
+      duration: 1500,
+      position: 'bottom',
+    });
 
+    await toast.present();
+  }
+
+  public GetInformationRecipe(){
+    this.ExtractIngredients()
+    this.Recipe={
+      IdRecipes: parseInt("82"+this.Generate.GenerationId()),
+      Name: (document.getElementById("InputName") as HTMLInputElement).value,
+      Ingredinets: this.Ingredients,
+      Procedure: (document.getElementById("TextAreaProcedure") as HTMLInputElement).value,
+      Carbohydrate: parseInt((document.getElementById("Carbohydrate") as HTMLInputElement).value),
+      Fat: parseInt((document.getElementById("Fat") as HTMLInputElement).value),
+      Protein:parseInt((document.getElementById("Protein") as HTMLInputElement).value)
+    }
+    this.CheckInformation()
+  }
+
+  private ExtractIngredients(){
+    this.Ingredients=(document.getElementById("InputIngredients") as HTMLInputElement).value
+    document.querySelectorAll(".IdIngredients").forEach(Element=>{
+      if((Element as HTMLInputElement).value){
+        this.Ingredients+="\n\n"+(Element as HTMLInputElement).value
+      }
+      
+    })
+  }
+
+  private RemoveInputsIngredients(){
+    document.querySelectorAll(".IdIngredients").forEach(Element=>{
+      Element.remove()
+    })
+  }
+  private ClearInputs(){
+    (document.getElementById("InputName") as HTMLInputElement).textContent="";
+    this.RemoveInputsIngredients();
+    (document.getElementById("InputIngredients") as HTMLInputElement).textContent="";
+    (document.getElementById("TextAreaProcedure") as HTMLInputElement).textContent="";
+    (document.getElementById("Carbohydrate") as HTMLInputElement).textContent="";
+    (document.getElementById("Fat") as HTMLInputElement).textContent="";
+    (document.getElementById("Protein") as HTMLInputElement).textContent="";
+  }
+
+  private async CheckInformation(){
+    if(this.Recipe.Name&&this.Recipe.Ingredinets&&this.Recipe.Procedure){
+      if(this.Recipe.Protein&&this.Recipe.Carbohydrate&&this.Recipe.Fat){
+        this.Firebase.AddNewRecipe(this.Recipe).finally(()=>{
+          this.presentToast()
+          this.ClearInputs()
+          this.router.navigate(['/homeNutritionist'])
+        })
+      }else{
+        this.MissingDates()
+      }
+    }else{
+      this.MissingDates()
+    }
+    this.flag=true
+  }
+  
 }

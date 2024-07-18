@@ -14,23 +14,16 @@
   <div>
     <div class="marginMain">
       <h1>Información de la receta</h1>
-      <div class="FlexInline Center">
-        <img class="ImgPhoto" src="./../../../assets/icon/Logo.png">
-        <div class="marginLeft">
-          <h3>Agregar una foto (OPCIONAL)</h3>
-          <ion-button shape="round">Tomar Foto</ion-button>
-        </div>
-      </div>
     </div>
     <div class="marginMain">
-      <ion-input class="marginUpDown widthInputs" autocomplete="false" label="Nombre de la receta" label-placement="floating"
+      <ion-input id="InputName" class="marginUpDown widthInputs" autocomplete="false" label="Nombre de la receta" label-placement="floating"
       fill="solid" placeholder="Nombre de la receta"></ion-input>
       <div >
         <h5>INGREDIENTES:</h5>
         <div id="ingredients">
           <div >
             <label >*</label>
-            <input autocomplete="off" class="InputIngredients" id="cosa">
+            <input autocomplete="off" class="InputIngredients" id="InputIngredients">
           </div>
         </div>
         <div class="MarginAddIngredients" >
@@ -46,17 +39,17 @@
         <div class="ContentInputInformationExtra">
           <div class="FlexInline widthDivInputsExtraInformation">
             <p>Proteina: </p>
-            <ion-input id="Object" class="widthInputsExtraInformation" type="number" autocomplete=false
+            <ion-input id="Protein" class="widthInputsExtraInformation" type="number" autocomplete=false
               fill="solid"></ion-input>
           </div>
           <div class="FlexInline widthDivInputsExtraInformation">
             <p>Carbohidrato: </p>
-            <ion-input id="ActualWeight" class="widthInputsExtraInformation" type="number" autocomplete=false
+            <ion-input id="Carbohydrate" class="widthInputsExtraInformation" type="number" autocomplete=false
               fill="solid"></ion-input>
           </div>
           <div class="FlexInline widthDivInputsExtraInformation">
             <p>Grasas: </p>
-            <ion-input id="Height" class="widthInputsExtraInformation" type="number" autocomplete=false
+            <ion-input id="Fat" class="widthInputsExtraInformation" type="number" autocomplete=false
               fill="solid"></ion-input>
           </div>
         </div>

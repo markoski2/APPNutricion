@@ -47,6 +47,10 @@ const routes: Routes = [
     path: 'informationRecipes',
     loadChildren: () => import('./Recipes/information-recipes/information-recipes.module').then( m => m.InformationRecipesPageModule)
   },
+  {
+    path: 'EditInformation',
+    loadChildren: () => import('./Nutritionist/edit-information/edit-information.module').then( m => m.EditInformationPageModule)
+  },
 ];
 
 @NgModule({

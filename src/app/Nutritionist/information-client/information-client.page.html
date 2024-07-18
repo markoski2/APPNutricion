@@ -3,15 +3,18 @@
     <ion-buttons slot="start">
       <ion-back-button default-href="homeNutritionist"></ion-back-button>
     </ion-buttons>
-    <ion-title>InformationClient</ion-title>
+    <div class="header">
+      <ion-title>InformationClient</ion-title>
+      <img class="ImgMenu" id="BtnMenu" (click)="ShowMenu()" src="./../../../assets/icon/menu.png">
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="MarginLeft">
-    <h1>Name Client</h1>
-    <h3>452000000000</h3>
-    <ion-button id="BtnMenu" class="BtnMenu">VER MENUS</ion-button>
+  <div class="MarginLeft" id="main">
+    <h1>{{User.Name}}</h1>
+    <h3>{{User.Phone}}</h3>
+    <ion-button (click)="GoMenu()" class="BtnMenu">VER MENUS</ion-button>
   </div>
   
   <div class="marginGraph">
@@ -22,35 +25,35 @@
     <div class="MarginLeft ">
       <div class="flexBetween">
         <p>Objetivo</p>
-        <p>50kg</p>
+        <p>{{ExtraInformation.TargetWeight}}kg</p>
       </div>
       <div class="flexBetween">
         <p>Peso Actual</p>
-        <p>233</p>
+        <p>{{ExtraInformation.ActualWeight}}kg</p>
       </div>
       <div class="flexBetween">
         <p>Altura</p>
-        <p>234</p>
+        <p>{{ExtraInformation.Height}}</p>
       </div>
       <div class="flexBetween">
         <p>Cintura</p>
-        <p>123</p>
+        <p>{{ExtraInformation.Waist}}</p>
       </div>
       <div class="flexBetween">
         <p>Cadera</p>
-        <p>123</p>
+        <p>{{ExtraInformation.Hip}}</p>
       </div>
       <div class="flexBetween">
-        <p>Brazos</p>
-        <p>123</p>
+        <p>Brazo</p>
+        <p>{{ExtraInformation.Arms}}</p>
       </div>
       <div class="flexBetween">
         <p>Pecho</p>
-        <p>123</p>
+        <p>{{ExtraInformation.Chest}}</p>
       </div>
       <div class="flexBetween">
         <p>Muslo</p>
-        <p>123</p>
+        <p>{{ExtraInformation.Thigh}}</p>
       </div>
     </div>
   </div>

@@ -12,21 +12,14 @@
     <div class="Page1">
       <div class="marginMain">
         <h1>Informacion Personal</h1>
-        <div class="FlexInline Center">
-          <img class="ImgPhoto" src="./../../../assets/icon/Logo.png">
-          <div class="marginLeft">
-            <h3>Agregar una foto (OPCIONAL)</h3>
-            <ion-button shape="round">Tomar Foto</ion-button>
-          </div>
-        </div>
       </div>
       <div class="marginMain marginUpDown">
-        <ion-input class="marginUpDown widthInputs" autocomplete="false" label="Nombres" label-placement="floating"
+        <ion-input id="InputName" class="marginUpDown widthInputs" autocapitalize="off" autocorrect="off" autocomplete="off" label="Nombres" label-placement="floating"
           fill="solid" placeholder="Ingrese Nombres"></ion-input>
-        <ion-input class="marginUpDown widthInputs" autocomplete="false" label="Apellidos" label-placement="floating"
+        <ion-input id="InputLastName" class="marginUpDown widthInputs" autocapitalize="off" autocorrect="off" autocomplete="off" label="Apellidos" label-placement="floating"
           fill="solid" placeholder="Ingrese Apellido paterno y materno"></ion-input>
-        <ion-input class="marginUpDown widthInputs" autocomplete="false" label="Numero celular"
-          labelPlacement="floating" [counter]="true" maxlength="10"></ion-input>
+        <ion-input id="InputCellPhone" class="marginUpDown widthInputs" autocapitalize="off" autocorrect="off" autocomplete="off" label="Numero celular"
+          labelPlacement="floating" placeholder="(000) 000 0000" #InputCellPhone [value]="inputModel" (ionInput)="onInput($event)" [counter]="true" maxlength="10"></ion-input>
       </div>
       <div class="FlexCenter ">
         <ion-button id="BtnPage1" shape="round">Siguiente</ion-button>
@@ -62,17 +55,17 @@
               fill="solid"></ion-input>
           </div>
           <div class="FlexInline widthDivInputsExtraInformation">
-            <p>Brazos: </p>
-            <ion-input id="Arms " class="widthInputsExtraInformation" type="number" autocomplete=false
+            <p>Brazo: </p>
+            <ion-input id="Arms" class="widthInputsExtraInformation" type="number" autocomplete=false
               fill="solid"></ion-input>
           </div>
           <div class="FlexInline widthDivInputsExtraInformation">
-            <p>Pechos: </p>
+            <p>Pecho: </p>
             <ion-input id="Breasts" class="widthInputsExtraInformation" type="number" autocomplete=false
               fill="solid"></ion-input>
           </div>
           <div class="FlexInline widthDivInputsExtraInformation">
-            <p>Muslos: </p>
+            <p>Muslo: </p>
             <ion-input id="Thighs" class="widthInputsExtraInformation" type="number" autocomplete=false
               fill="solid"></ion-input>
           </div>
@@ -80,7 +73,7 @@
       </div>
       <div class="FlexSpace marginUpDown">
         <ion-button id="BtnPage2" shape="round">Regresar</ion-button>
-        <ion-button id="BtnPageSave" (click)="presentAlert()" shape="round">Guardar</ion-button>
+        <ion-button id="BtnPageSave" (click)="SaveInformationClient()" shape="round">Guardar</ion-button>
       </div>
     </div>
 

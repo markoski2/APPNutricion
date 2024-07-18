@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.APPNutricion',
+  appId: 'Com.Alvord.AppNutricion',
   appName: 'APPNutricion',
   webDir: 'www'
 };

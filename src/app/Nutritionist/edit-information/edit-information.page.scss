@@ -1,0 +1,79 @@
+//header
+.DivHeader{
+    display: flex;
+    justify-content: space-around;
+}   
+.IconEdit{
+    width: 50px;
+    height: 50px;
+    right: 0;
+    margin-right: 10px;
+}
+//
+textarea{
+    width: 95%;
+    height: 250px;
+}
+.FlexCenter{
+    justify-content: center;
+}
+.margin3{
+    margin: 10px;
+}
+//circul
+.radius{
+    border-radius: 15px;
+    background: red;
+    width: 190px;
+    height: 70px;
+}
+.imgCircle{
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+}
+.padding{
+    align-items: center;
+    padding: 10px;
+}
+.font1{
+    font-size: 18px;
+    margin: 5px;
+}
+.flexWrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.margin1{
+    margin: 10px;
+}
+.flex{
+    display: flex;
+}
+.margin2{
+    margin-left: 5px;
+}
+//extrainformation
+.DivExtraInformation{
+    margin: 10px 0 15px 0;
+}
+.inputExtra{
+    width: 50px;
+    height: 30px;
+    margin: 0;
+    border: none;
+    background: none;
+    border-bottom: 2px solid white;
+}
+p{
+    margin: 0;
+}
+//InputName
+.marginUpDown{
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+.widthInputs{
+    width: 300px;
+}

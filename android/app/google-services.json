@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "444985137365",
+    "project_id": "appnutricion-7697b",
+    "storage_bucket": "appnutricion-7697b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444985137365:android:643ad18efa26c04d05aa5c",
+        "android_client_info": {
+          "package_name": "Com.Alvord.AppNutricion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADoIUOGkagh0z---1nbli3J0BHpCziPUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,72 @@
+.Flex{
+    display: flex;
+}
+.flexAround{
+    justify-content: space-around;
+}
+.FlexColumn{
+    display: flex;
+    flex-direction: column;
+}
+.flexBetween{
+    justify-content: space-between;
+}
+//
+.marginmain{
+    margin-left: 30px;
+}
+.MarginTop{
+    margin-top: 50px;
+}
+.widthContentOption{
+    width: 250px;
+}
+.none{
+    display: none;
+}
+.BtnOpc{
+    width: 110px;
+    height: 50px;
+}
+//
+.InputSearch{
+    height: 50px;
+    width: 70%;
+    border-radius: 20px 0 0 20px;
+    background: #D6D6D6;
+    font-size: 15px;
+    padding: 10px 10px 10px 15PX;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    border-width: 2px 0px 2px 2px;
+    border-style: solid;
+    border-color: black;
+    outline: none;
+}
+.ImgSearch{
+    width: 30px;
+    height: 30px;
+    
+}
+.DivImgSearch{
+    height: 50px;
+    width: 50px;
+    background: #D6D6D6;
+    border-radius: 0px 20px 20px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px 2px 2px 0px;
+    border-style: solid;
+    border-color: black;
+}
+.CenterBtn{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px;
+}
+
+ion-checkbox{
+    margin: 5px 0;
+    --size:25px
+}

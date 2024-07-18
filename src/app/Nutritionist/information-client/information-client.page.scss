@@ -1,7 +1,6 @@
 .graph{
     width: 90%;
     height: 300px;
-    background: red;
 }
 .DivExtraInformation{
     border-top-left-radius: 10px;
@@ -34,8 +33,19 @@ p{
     align-items: center;
     margin: 0 20px;
 }
+.ImgMenu{
+    width: 30px;
+}
+.header{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px;
+}
 @media (prefers-color-scheme: dark){
     .DivExtraInformation{
         background: white;
+    }
+    ion-header{
+        background: #757575;
     }
 }

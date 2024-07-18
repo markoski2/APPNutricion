@@ -3,223 +3,61 @@
     <ion-buttons slot="start">
       <ion-back-button default-href="homeClient"></ion-back-button>
     </ion-buttons>
-    <ion-title>Menu de la semana</ion-title>
+    <div class="FlexBetween">
+      <ion-title>Horario de comida</ion-title>
+      <img class="IconAdd" (click)="BtnAdd()" id="Add"  src="./../../../assets/icon/Add.png">
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="FlexCenter background">
-    <div class="card ">
-      <p class="flexJustifyCenter">DayNow</p>
-      <ion-toolbar>
-        <ion-segment [scrollable]="true" value="all">
-          <ion-segment-button value="all">
-            <ion-label>DESAYUNO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="favorites">
-            <ion-label>ALMUERZO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="sdsd">
-            <ion-label>COMIDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="ffdf">
-            <ion-label>MERIENDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="wewew">
-            <ion-label>CENA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="vcvcv">
-            <ion-label>REGRIGERIO</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-      <div (click)="InformationRecipes()" class="MarginBotton">
-        <div class="backgroundBlack">
-          <h3 class="marginleft">RECIPES NAME</h3>
-        </div>
-        <div>
-          <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
-        </div>
-      </div>
-    </div>
-
-    <div class="card Margin1">
-      <p class="flexJustifyCenter">DayNow</p>
-      <ion-toolbar>
-        <ion-segment [scrollable]="true" value="all">
-          <ion-segment-button value="all">
-            <ion-label>DESAYUNO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="favorites">
-            <ion-label>ALMUERZO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="sdsd">
-            <ion-label>COMIDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="ffdf">
-            <ion-label>MERIENDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="wewew">
-            <ion-label>CENA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="vcvcv">
-            <ion-label>REGRIGERIO</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-      <div class="MarginBotton">
-        <div class="backgroundBlack">
-          <h3 class="marginleft">RECIPES NAME</h3>
-        </div>
-        <div>
-          <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
+    @for (item of Menus; track $index) {
+      <div class="card ">
+        <p (click)="ShowOptions(item,$index)" class="flexJustifyCenter">{{Days[$index]}}</p>
+        <ion-toolbar>
+          <ion-segment [scrollable]="true" value="Breakfast">
+            @if (item.Breakfast!=0) {
+              <ion-segment-button (click)="SetNameCard(item,''+item.Breakfast,'Desayuno',$index)" value="Breakfast">
+                <ion-label>DESAYUNO</ion-label>
+              </ion-segment-button>
+            }
+            @if(item.Lunch!=0){
+              <ion-segment-button (click)="SetNameCard(item,''+item.Lunch,'Almuerzo',$index)" value="Lunch">
+                <ion-label >ALMUERZO</ion-label>
+              </ion-segment-button>
+            }
+            @if(item.Meal!=0){
+              <ion-segment-button value="Meal" (click)="SetNameCard(item,''+item.Meal,'Comida',$index)">
+                <ion-label>COMIDA</ion-label>
+              </ion-segment-button>
+            }
+            @if(item.Snack!=0){
+              <ion-segment-button value="Snack" (click)="SetNameCard(item,''+item.Snack,'Merienda',$index)">
+                <ion-label >MERIENDA</ion-label>
+              </ion-segment-button>
+            }
+            @if(item.Dinner!=0){
+              <ion-segment-button value="Dinner" (click)="SetNameCard(item,''+item.Dinner,'Cena',$index)">
+                <ion-label>CENA</ion-label>
+              </ion-segment-button>
+            }
+            @if(item.Refreshment!=0){
+              <ion-segment-button  value="Refreshment" (click)="SetNameCard(item,''+item.Refreshment,'Refrigerio',$index)">
+                <ion-label>REGRIGERIO</ion-label>
+              </ion-segment-button>
+            }
+          </ion-segment>
+        </ion-toolbar>
+        <div (click)="InformationRecipes($index)" class="MarginBotton">
+          <div class="backgroundBlack">
+            <h3 id='{{item.IdMenu}}' class="marginleft"></h3>
+          </div>
+          <div>
+            <img id='I{{item.IdMenu}}' class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="card Margin1">
-      <p class="flexJustifyCenter">DayNow</p>
-      <ion-toolbar>
-        <ion-segment [scrollable]="true" value="all">
-          <ion-segment-button value="all">
-            <ion-label>DESAYUNO</ion-label>
-          </ion-segment-button>
-          
-          <ion-segment-button value="sdsd">
-            <ion-label>COMIDA</ion-label>
-          </ion-segment-button>
-          
-          <ion-segment-button value="wewew">
-            <ion-label>CENA</ion-label>
-          </ion-segment-button>
-          
-        </ion-segment>
-      </ion-toolbar>
-      <div class="MarginBotton">
-        <div class="backgroundBlack">
-          <h3 class="marginleft">RECIPES NAME</h3>
-        </div>
-        <div>
-          <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
-        </div>
-      </div>
-    </div>
-
-    <div class="card Margin1">
-      <p class="flexJustifyCenter">DayNow</p>
-      <ion-toolbar>
-        <ion-segment [scrollable]="true" value="all">
-          <ion-segment-button value="all">
-            <ion-label>DESAYUNO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="favorites">
-            <ion-label>ALMUERZO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="sdsd">
-            <ion-label>COMIDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="ffdf">
-            <ion-label>MERIENDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="wewew">
-            <ion-label>CENA</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-      <div class="MarginBotton">
-        <div class="backgroundBlack">
-          <h3 class="marginleft">RECIPES NAME</h3>
-        </div>
-        <div>
-          <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
-        </div>
-      </div>
-    </div>
-
-    <div class="card Margin1">
-      <p class="flexJustifyCenter">DayNow</p>
-      <ion-toolbar>
-        <ion-segment [scrollable]="true" value="all">
-          <ion-segment-button value="all">
-            <ion-label>DESAYUNO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="favorites">
-            <ion-label>ALMUERZO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="sdsd">
-            <ion-label>COMIDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="ffdf">
-            <ion-label>MERIENDA</ion-label>
-          </ion-segment-button>
-          
-        </ion-segment>
-      </ion-toolbar>
-      <div class="MarginBotton">
-        <div class="backgroundBlack">
-          <h3 class="marginleft">RECIPES NAME</h3>
-        </div>
-        <div>
-          <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
-        </div>
-      </div>
-    </div>
-
-    <div class="card Margin1">
-      <p class="flexJustifyCenter">DayNow</p>
-      <ion-toolbar>
-        <ion-segment [scrollable]="true" value="all">
-          
-          <ion-segment-button value="sdsd">
-            <ion-label>COMIDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="ffdf">
-            <ion-label>MERIENDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="wewew">
-            <ion-label>CENA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="vcvcv">
-            <ion-label>REGRIGERIO</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-      <div class="MarginBotton">
-        <div class="backgroundBlack">
-          <h3 class="marginleft">RECIPES NAME</h3>
-        </div>
-        <div>
-          <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
-        </div>
-      </div>
-    </div>
-
-    <div class="card Margin1">
-      <p class="flexJustifyCenter">DayNow</p>
-      <ion-toolbar>
-        <ion-segment [scrollable]="true" value="all">
-          <ion-segment-button value="all">
-            <ion-label>DESAYUNO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="favorites">
-            <ion-label>ALMUERZO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="vcvcv">
-            <ion-label>REGRIGERIO</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-      <div class="MarginBotton">
-        <div class="backgroundBlack">
-          <h3 class="marginleft">RECIPES NAME</h3>
-        </div>
-        <div>
-          <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
-        </div>
-      </div>
-    </div>
-
-    
-    
+    }
   </div>
 </ion-content>
