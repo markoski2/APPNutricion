@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { FirebaseService } from '../Service/firebase.service';
 
 @Component({
   selector: 'app-home',
@@ -8,17 +9,19 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  constructor(private alertController: AlertController,private router:Router) {}
+  constructor(private alertController: AlertController,private router:Router,
+    private Firebase:FirebaseService) {}
   
   ngOnInit(){
     document.getElementById("BtnLogin")?.addEventListener("click",()=>{
       var user=(document.getElementById("InputUser") as HTMLInputElement).value
-      if(user=="admin"){
-        this.router.navigate(["/homeNutritionist"])
-      }else{
-        this.router.navigate(["/homeClient"])
-      }
+      let password=(document.getElementById("InputPassword") as HTMLInputElement).value
+      this.login(user,password)
     })
+  }
+
+  private async login(User:string,Password:string){
+    this.Firebase.GetUser(User,Password)
   }
 
   async presentAlert() {
@@ -53,6 +56,9 @@ export class HomePage implements OnInit {
 
     await alert.present();
   }
+  
+
+  
 
 
 }

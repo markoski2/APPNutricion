@@ -115,7 +115,7 @@ export class CreateClientPage implements OnInit {
           handler: () => {
             this.Firebase.AddDate(this.InformationClient!).finally(()=>{
               this.Firebase.AddExtraInformation(this.ExtraInformationClient!)
-              this.User.CreateUser(this.InformationClient!.Name,this.InformationClient!.LastName)
+              this.User.CreateUser(this.InformationClient!.Name,this.InformationClient!.LastName,this.InformationClient!.IdClient)
             })
             //this.User.CreateUser(this.InformationClient!.Name,this.InformationClient!.LastName)
           },

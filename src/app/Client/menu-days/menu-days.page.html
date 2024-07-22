@@ -5,7 +5,9 @@
     </ion-buttons>
     <div class="FlexBetween">
       <ion-title>Horario de comida</ion-title>
-      <img class="IconAdd" (click)="BtnAdd()" id="Add"  src="./../../../assets/icon/Add.png">
+      @if (FlagAddDayMenu) {
+        <img class="IconAdd" (click)="BtnAdd()" id="Add"  src="./../../../assets/icon/Add.png">
+      }
     </div>
   </ion-toolbar>
 </ion-header>

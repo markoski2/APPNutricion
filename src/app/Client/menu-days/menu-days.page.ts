@@ -24,6 +24,7 @@ export class MenuDaysPage implements OnInit {
   FlagBoolean: InterRecipes[] = []
   Days: string[] = []
   Recipes!: InterRecipes[]
+  FlagAddDayMenu:boolean=false
   private flagOptions: boolean = false
   private Recipe!: InterRecipes
 
@@ -40,6 +41,7 @@ export class MenuDaysPage implements OnInit {
   }
   private async GetInformationClient() {
     var information: any = this.information.InformationClient
+    this.FlagAddDayMenu=this.information.FlagMenu
     try {
       let doc:any=await this.Firebase.GetClient(information.IdClient)
       this.User = doc

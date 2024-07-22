@@ -1,5 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Chart } from 'chart.js/auto';
+import { InterExtraInformationClient } from 'src/app/Interface/interfaces.service';
+import { BdService } from 'src/app/Service/bd.service';
 
 @Component({
   selector: 'app-information',
@@ -7,15 +9,19 @@ import { Chart } from 'chart.js/auto';
   styleUrls: ['./information.page.scss'],
 })
 export class InformationPage implements OnInit {
-  ctx: any = document.getElementById('myChart');
-  char!: Chart
-  constructor() { }
+  char!: Chart | undefined
+  Information!:InterExtraInformationClient
+  constructor(private bd:BdService) { }
 
   ngOnInit() {
+    this.GetInformation()
   }
-  @ViewChild('someInput2') someInput!: ElementRef;
+  @ViewChild('someInput2',{static: true}) someInput!: ElementRef;
 
-  ngAfterViewInit() {
+  graph() {
+    console.log("Informacion recibida")
+    console.log(this.Information)
+    let min=this.Information.Weights.LastWeight-30
     this.char=new Chart(this.someInput.nativeElement, {
       type: 'line',
       data: {
@@ -23,7 +29,11 @@ export class InformationPage implements OnInit {
         datasets: [
           {
             label: 'Pesos',
-            data: [80, 78, 81, 72, 70],
+            data: [this.Information.Weights.StarWeight, 
+              this.Information.Weights.Weight3, 
+              this.Information.Weights.Weight2, 
+              this.Information.Weights.Weight1, 
+              this.Information.Weights.LastWeight],
             borderWidth: 1,
             borderColor: '#00E4FF',
             backgroundColor:'#00E4FF'
@@ -34,7 +44,7 @@ export class InformationPage implements OnInit {
         scales: {
           y: {
             beginAtZero: false,
-            min:40,
+            min:min,
             grid: {
               color: 'rgba(165, 165, 165)', // Color de las líneas de fondo en el eje X
           },
@@ -54,5 +64,11 @@ export class InformationPage implements OnInit {
       },
     });
   } //end ngAfterViewInit
+
+  private async GetInformation(){
+    let ExtraInformation:any=this.bd.ExtraInformationClient
+    this.Information=ExtraInformation
+    this.graph()
+  }
 
 }

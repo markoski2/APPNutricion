@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { ScreenShotService } from './screen-shot.service';
 import { InterClient, InterExtraInformationClient } from '../Interface/interfaces.service';
 import { ElementsService } from './elements.service';
+import { FirebaseService } from './firebase.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,18 @@ export class GenerationUserService {
   constructor(private alertController:AlertController
     ,private router:Router,
     private Screenshot:ScreenShotService,
-    private Elemento:ElementsService) { }
+    private Elemento:ElementsService,
+    private Firebase:FirebaseService) { }
+
   InformationClient?: InterClient
   ExtraInformationClient?: InterExtraInformationClient
   private User:string=""
   private Password:string=""
+  private IdClient:number=0
   private letters="ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz1234567890"
 
-  public CreateUser(Name:string,LastName:string){
+  public CreateUser(Name:string,LastName:string,Id:number){
+    this.IdClient=Id
     this.GenerationUser(Name,LastName)
     this.GenerationPassword()
     this.KeyUser()
@@ -44,6 +49,8 @@ export class GenerationUserService {
           role: 'confirm',
           handler: () => {
             this.Elemento.AddClientToast()
+            let Id=this.GenerationId()
+            this.Firebase.CreateUser("85"+Id,this.User,this.Password,this.IdClient)
             this.router.navigate(['/homeNutritionist']).finally(()=>{
               window.location.reload()
             })

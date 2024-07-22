@@ -77,7 +77,7 @@ export class MealTimePage implements OnInit {
     }else{
       await this.Firebase.AddDate(this.InformationClient!)
       await this.Firebase.AddExtraInformation(this.ExtraInformationClient!).finally(() => {
-        this.User.CreateUser(this.InformationClient!.Name, this.InformationClient!.LastName)
+        this.User.CreateUser(this.InformationClient!.Name, this.InformationClient!.LastName,this.InformationClient!.IdClient)
       })
     }
   }

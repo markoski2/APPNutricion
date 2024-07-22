@@ -3,12 +3,17 @@ import { environment } from 'src/environments/environment';
 import { initializeApp } from "firebase/app";
 import { doc, getDoc, setDoc, getDocs, getFirestore, collection, writeBatch } from "firebase/firestore";
 import { InterMenu, InterRecipes, InterClient, InterExtraInformationClient } from '../Interface/interfaces.service';
+import { BdService } from './bd.service';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  constructor() { }
+  constructor(private bd:BdService,private router:Router,
+    private alertController: AlertController
+  ) { }
   private app = initializeApp(environment.firebase);
   private db = getFirestore(this.app);
 
@@ -106,6 +111,66 @@ export class FirebaseService {
         Refreshment: Menu.Refreshment
       })
     } catch (error) { console.log(error) }
+  }
+  public async CreateUser(Id:string,User:string,Password:string,IdClient:number){
+    try {
+      const docRef = await setDoc(doc(this.db, "User",Id), {
+        IdUser: Id,
+        IdClient: IdClient,
+        User: User,
+        Password: Password,
+      })
+    } catch (error) { console.log(error) }
+  }
+  public async GetUser(User:string,Password:string){
+    try {
+      const docRef = await getDocs(collection(this.db, "User"))
+      let range:boolean=false
+      let flag:boolean=false
+      for (let Element of docRef.docs) {
+        if(Element.data()['User']==User){
+          if(Element.data()['Password']==Password){
+            this.bd.User=Element.data()['IdClient']
+            flag=true
+            console.log("informacion cliente")
+            console.log(Element.data()['IdClient'])
+            //if the range
+            
+          }
+        }
+      }
+      if(flag){
+        if(range){
+          return this.router.navigate(["/homeNutritionist"])
+        }else{
+          return this.router.navigate(['/homeClient'])
+        }
+      }else{
+        this.UserPasswordIncorrectAlert()
+        return 0
+      }      
+    } catch (error) { return "hay un error" }
+  }
+  public async UserPasswordIncorrectAlert() {
+    const alert = await this.alertController.create({
+      header: 'Usuario o Contraseña Incorrecta',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: () => {
+            this.clearInputs()
+          },
+        },
+      ]
+    });
+    await alert.present();
+  }
+  public clearInputs(){
+    let user=(document.getElementById("InputUser") as HTMLInputElement)
+    let password=(document.getElementById("InputPassword") as HTMLInputElement)
+    user.textContent=""
+    password.textContent=""
   }
 
   public async GetRecipes() {

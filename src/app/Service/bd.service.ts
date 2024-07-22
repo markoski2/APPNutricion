@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { InterClient, InterMenu, InterRecipes } from '../Interface/interfaces.service';
+import { InterClient, InterExtraInformationClient, InterMenu, InterRecipes } from '../Interface/interfaces.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BdService {
   InformationClient?: InterClient
+  ExtraInformationClient?: InterExtraInformationClient
   InformationRecipes?:InterRecipes
   InformationMenu?:InterMenu
   FlagMenu:boolean=false
   FlagAddDayMenu:boolean=false
+  User:number=0
   Recipes = [
     {
       IdRecipes: 1,

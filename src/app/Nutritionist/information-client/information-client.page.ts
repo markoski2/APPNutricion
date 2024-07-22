@@ -51,7 +51,7 @@ export class InformationClientPage implements OnInit {
   //Graph
   @ViewChild('someInput2') someInput!: ElementRef;
   graph() {
-    let min=this.ExtraInformation.Weights.StarWeight-40
+    let min=this.ExtraInformation.Weights.LastWeight-30
     this.char=new Chart(this.someInput.nativeElement, {
       type: 'line',
       data: {

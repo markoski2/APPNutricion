@@ -11,8 +11,8 @@
       <div class="InformationContact" id="Contact">
         <p class="font2"><b>CONTÁCTANOS</b></p>
       </div>
-      <div class="InformationContact" id="About">
-        <p class="font2"><b>ACERCA DE APPLICATIONNAME</b></p>
+      <div class="InformationContact">
+        <p class="font2" (click)="SingOff()" ><b>CERRAR SESIÓN</b></p>
       </div>
     </div>
   </div>
@@ -32,39 +32,54 @@
         <p>HORARIO: <label> 16:00 (4:00 PM)</label> </p>
       </div>
     </div>
-    <div class="card">
-      <p class="flexJustifyCenter">DayNow</p>
-      <ion-toolbar>
-        <ion-segment [scrollable]="true" value="all">
-          <ion-segment-button value="all">
-            <ion-label>DESAYUNO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="favorites">
-            <ion-label>ALMUERZO</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="sdsd">
-            <ion-label>COMIDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="ffdf">
-            <ion-label>MERIENDA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="wewew">
-            <ion-label>CENA</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="vcvcv">
-            <ion-label>REGRIGERIO</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-      <div (click)="InformationRecipes()" class="MarginBotton">
-        <div class="backgroundBlack">
-          <h3 class="marginleft black">RECIPES NAME</h3>
-        </div>
-        <div>
-          <img class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
+    @if(!this.flagShowMenu){
+      <div class="card ">
+        <p class="flexJustifyCenter">{{Days}}</p>
+        <ion-toolbar>
+          <ion-segment [scrollable]="true" value="Breakfast">
+            @if (this.MenuDay.Breakfast!=0) {
+              <ion-segment-button (click)="SetNameCard(MenuDay.Breakfast,'Desayuno')" value="Breakfast">
+                <ion-label>DESAYUNO</ion-label>
+              </ion-segment-button>
+            }
+            @if(this.MenuDay.Lunch!=0){
+              <ion-segment-button (click)="SetNameCard(MenuDay.Lunch,'Almuerzo')" value="Lunch">
+                <ion-label >ALMUERZO</ion-label>
+              </ion-segment-button>
+            }
+            @if(this.MenuDay.Meal!=0){
+              <ion-segment-button value="Meal" (click)="SetNameCard(MenuDay.Meal,'Comida')">
+                <ion-label>COMIDA</ion-label>
+              </ion-segment-button>
+            }
+            @if(this.MenuDay.Snack!=0){
+              <ion-segment-button value="Snack" (click)="SetNameCard(MenuDay.Snack,'Merienda')">
+                <ion-label >MERIENDA</ion-label>
+              </ion-segment-button>
+            }
+            @if(this.MenuDay.Dinner!=0){
+              <ion-segment-button value="Dinner" (click)="SetNameCard(MenuDay.Dinner,'Cena')">
+                <ion-label>CENA</ion-label>
+              </ion-segment-button>
+            }
+            @if(this.MenuDay.Refreshment!=0){
+              <ion-segment-button  value="Refreshment" (click)="SetNameCard(MenuDay.Refreshment,'Refrigerio')">
+                <ion-label>REGRIGERIO</ion-label>
+              </ion-segment-button>
+            }
+          </ion-segment>
+        </ion-toolbar>
+        <div (click)="InformationRecipes()" class="MarginBotton">
+          <div class="backgroundBlack">
+            <h3 id='{{MenuDay.IdMenu}}' class="marginleft"></h3>
+          </div>
+          <div>
+            <img id='I{{MenuDay.IdMenu}}' class="ImgRicepesCad" src="./../../../assets/icon/Portada.png">
+          </div>
         </div>
       </div>
-    </div>
+    }
+    
     
     <div class="card ">
       <p class="marginleft">EXTRAS</p>
