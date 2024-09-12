@@ -19,7 +19,7 @@
   <div>
     <ion-segment value="all">
       <ion-segment-button id="Carousel1" value="all">
-        <ion-label >Ingredientes</ion-label>
+        <ion-label>Ingredientes</ion-label>
       </ion-segment-button>
       <ion-segment-button id="Carousel2" value="procedure">
         <ion-label>Procedimiento</ion-label>
@@ -29,28 +29,24 @@
       </ion-segment-button>
     </ion-segment>
     <div id="Carousel" class="Carousel flex">
-      <div  class="ContentCarousel">
-        <p class="FontP">
-          {{this.Recipes.Ingredinets}}
-        </p>
+      <div class="ContentCarousel">
+        <textarea readonly disabled class="FontP">{{this.Recipes.Ingredinets}}</textarea>
       </div>
       <div class="ContentCarousel">
-        <p class="FontP">
-          {{this.Recipes.Procedure}}
-        </p>
+        <textarea readonly disabled class="FontP">{{this.Recipes.Procedure}}</textarea>
       </div>
       <div class="ContentCarousel">
         <h3>Informacion Nutrimental</h3>
         <div class="flexWrap ">
           <div class="margin1 flex radius padding">
-            <img class="imgCircle"  src="./../../../assets/icon/fire.png">
+            <img class="imgCircle" src="./../../../assets/icon/fire.png">
             <div class="margin2 ">
               <p class="font1">Carbohidratos</p>
               <p class="font1"> {{this.Recipes.Carbohydrate}}g</p>
             </div>
           </div>
           <div class="margin1 flex radius padding">
-            <img class="imgCircle"  src="./../../../assets/icon/arm.png">
+            <img class="imgCircle" src="./../../../assets/icon/arm.png">
             <div class="margin2">
               <p class="font1">Proteinas</p>
               <p class="font1">{{this.Recipes.Protein}}g</p>
@@ -67,7 +63,7 @@
 
       </div>
     </div>
-    
+
   </div>
-  
+
 </ion-content>

@@ -44,7 +44,8 @@ export class EditMenuDayPage implements OnInit {
     
   }
 
-  public SaveInformation(){
+  public async SaveInformation(){
+    this.elementoHtml.ElementLoading('TagHeader')
     var x = "Escoger Receta"
     if (this.breakfast != x || this.lunch != x || this.meal != x || this.snack != x || this.dinner != x || this.refreshment != x){
       this.Menu = {
@@ -56,10 +57,17 @@ export class EditMenuDayPage implements OnInit {
         Dinner: this.MealTime[4].Id,
         Refreshment: this.MealTime[5].Id
       }
+      console.log("menu a enviar")
       console.log(this.Menu)
-      this.Firebase.UpDateInformationMenuDay(this.Menu).finally(()=>{
-        this.elementoHtml.UpdateClientToast()
-        this.route.navigate(['/homeNutritionist'])
+      await this.Firebase.UpDateInformationMenuDay(this.Menu).subscribe((res)=>{
+        if(res.Flag){
+          this.elementoHtml.UpdateClientToast()
+          this.elementoHtml.RemoveLoad()
+          this.route.navigate(['/homeNutritionist'])
+        }else{
+          this.elementoHtml.ErrorRecipeToast()
+          this.elementoHtml.RemoveLoad()
+        }
       })
     }else{
       this.AlertDelate()
@@ -128,12 +136,20 @@ export class EditMenuDayPage implements OnInit {
     }
   }
   private async GetRecipes() {
-    var GetRecipe: any = await this.Firebase.GetRecipes()
-    this.Recipes = GetRecipe
-    for (let index = 0; index < 5; index++) {
-      this.Array.push(this.Recipes[index])
-    }
-    this.pushMealTime()
+    let GetRecipe: any
+    await this.Firebase.GetRecipes().subscribe((res)=>{
+      if(res!=null){
+        GetRecipe=res
+        this.Recipes = GetRecipe
+        for (let index = 0; index < 5; index++) {
+          this.Array.push(this.Recipes[index])
+        }
+        this.pushMealTime()
+      }else if(!res.Flag){
+        console.log("No se encontraron recetas")
+      }
+    })
+    
   }
   
   //Modal Select recipe

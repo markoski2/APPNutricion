@@ -55,5 +55,10 @@ export interface InterExtraInformationClient {
     Weight2:number;
     Weight1:number;
     LastWeight:number;
+    DateStar:string;
+    Date3:string;
+    Date2:string;
+    Date1:string;
+    DateLast:string;
   }
 }

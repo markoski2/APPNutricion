@@ -6,23 +6,132 @@ import { InterMenu, InterRecipes, InterClient, InterExtraInformationClient } fro
 import { BdService } from './bd.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
   constructor(private bd:BdService,private router:Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private Http:HttpClient
   ) { }
   private app = initializeApp(environment.firebase);
   private db = getFirestore(this.app);
-
-  public async AddDate(User: InterClient) {
+  private cosa:any=[]
+  //Create
+  public CreateUser(User:any):Observable<any>{
     try {
-      const docRef = await setDoc(doc(this.db, "Clients", "" + User.IdClient), {
-        IdClient: User.IdClient,
-        IdUser: User.IdUser,
-        IdClientInformation: User.IdClientInformation,
+      let Url:string="https://createuser-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,User)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  //GETS
+  public GetUser(TextUser:string,TextPassword:string): Observable<any>{
+    let User:any={
+      User:TextUser,
+      Password:TextPassword
+    }
+    try {
+      let Url:string="https://getuser-pycjk7zayq-uc.a.run.app"
+      let DatesUser:any=this.Http.post<any>(Url,User)
+
+      return DatesUser
+      
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public GetClients():Observable<any> {
+    try {
+      let Url:string="https://getclients-pycjk7zayq-uc.a.run.app"
+      let Information:any=this.Http.get<any>(Url)
+      return Information
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public GetClient(Id:number):Observable<any> {
+    try {
+      let Url:string="https://getclient-pycjk7zayq-uc.a.run.app"
+      let NumberId={
+        Id:Id
+      }
+      let InformationClient=this.Http.post<any>(Url,NumberId)
+      return InformationClient
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+
+  }
+  public GetExtraInformationClient(id: number):Observable<any> {
+    try {
+      let Url:string="https://getextrainforamtionclient-pycjk7zayq-uc.a.run.app"
+      let NumberId={
+        Id:id
+      }
+      console.log("informacion del service del firebase")
+      console.log(NumberId)
+      
+      let ExtraInformationClient:any=this.Http.post<any>(Url,NumberId)
+      return ExtraInformationClient
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+
+  }
+  public GetRecipes():Observable<any> {
+    try {
+      let Url:string="https://getrecipes-pycjk7zayq-uc.a.run.app"
+      let AllRecipes:any=this.Http.get<any>(Url)
+      return AllRecipes
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+
+  }
+  public GetMenu(id: any):Observable<any>{
+    try {
+      let Url:string="https://getmenu-pycjk7zayq-uc.a.run.app"
+      /*let NumberId={
+        Id:id
+      }*/
+      let InformationMenu:any=this.Http.post<any>(Url,id)
+      return InformationMenu
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+
+  }
+  public GetAllMenus():Observable<any> {
+    
+    try {
+      let Url:string="https://getmenus-pycjk7zayq-uc.a.run.app"
+      let AllMenus:any=this.Http.get<any>(Url)
+      return AllMenus
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+
+  }
+  //ADD
+  public AddDate(User: InterClient):Observable<any> {
+    try {
+      let InformationClient:any = {
+        IdClient: User.IdClient.toString(),
+        IdUser: User.IdUser.toString(),
+        IdClientInformation: User.IdClientInformation.toString(),
         Name: User.Name,
         LastName: User.LastName,
         Phone: User.Phone,
@@ -37,120 +146,194 @@ export class FirebaseService {
           Saturday: User.Menus.Saturday,
           Sunday: User.Menus.Sunday,
         }
-      })
-    } catch (error) { console.log(error) }
-
-    /*const docRef = await addDoc(collection(db, "Clients"),{
-      IdClient: User.IdClient,
-      IdUser: User.IdUser,
-      IdClientInformation: User.IdClientInformation,
-      Name: User.Name,
-      LastName: User.LastName,
-      Phone: User.Phone,
-      NextDate: User.NextDate,
-      NextHours: User.NextHours,
-      Menus:{
-        Monday: User.Menus.Monday,
-        Tuesday:User.Menus.Tuesday,
-        Wednesday:User.Menus.Wednesday,
-        Thursday:User.Menus.Thursday,
+      }
+      let Url:string="https://addinformationclient-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,InformationClient)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public AddExtraInformation(Extra: InterExtraInformationClient):Observable<any> {
+    try {
+      let Url:string="https://addextrainformationclient-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,Extra)
+        
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public AddNewRecipe(Recipe: InterRecipes):Observable<any>{
+    try {
+      let Url="https://addnewrecipe-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,Recipe)
+    }catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public AddMenu(Menu: InterMenu[]):Observable<any> {
+    try {
+      let Url="https://addmenu-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,Menu)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  //Update
+  public ModificateMenus(Element: string, value: string, Id: number):Observable<any> {
+    try {
+      let Information={
+        Id:Id,
+        Parameter:Element,
+        Value:value
+      }
+      let Url:string="https://updatemenu-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,Information)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public ModificateMenuClient(User: InterClient,Id:number ):Observable<any> {
+    try {
+      let Menus={
+        Id:Id,
         Friday:User.Menus.Friday,
+        Monday:User.Menus.Monday,
         Saturday:User.Menus.Saturday,
         Sunday:User.Menus.Sunday,
+        Thursday:User.Menus.Thursday,
+        Tuesday:User.Menus.Tuesday,
+        Wednesday:User.Menus.Wednesday
       }
-    });*/
+      let Url:string="https://updatemenuclient-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,Menus)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
   }
-
-  public async AddExtraInformation(Extra: InterExtraInformationClient) {
+  public UpdateRecipe(NewRecipe: InterRecipes):Observable<any> {
     try {
-      const docRef = await setDoc(doc(this.db, "ClientInformation", "" + Extra.IdClientInformation), {
-        IdClientInformation: Extra.IdClientInformation,
-        IdClient: Extra.IdClient,
-        TargetWeight: Extra.TargetWeight,
-        ActualWeight: Extra.ActualWeight,
-        Height: Extra.Height,
-        Waist: Extra.Waist,
-        Hip: Extra.Hip,
-        Arms: Extra.Arms,
-        Chest: Extra.Chest,
-        Thigh: Extra.Thigh,
-        Weights: {
-          StarWeight: Extra.Weights.StarWeight,
-          Weight3: Extra.Weights.Weight3,
-          Weight2: Extra.Weights.Weight2,
-          Weight1: Extra.Weights.Weight1,
-          LastWeight: Extra.Weights.LastWeight
-        }
-      })
-    } catch (error) { console.log(error) }
-  }
-
-  public async AddNewRecipe(Recipe: InterRecipes) {
-    try {
-      const docRef = await setDoc(doc(this.db, "Recipes", "" + Recipe.IdRecipes), {
-        IdRecipes: Recipe.IdRecipes,
-        Name: Recipe.Name,
-        Ingredinets: Recipe.Ingredinets,
-        Procedure: Recipe.Procedure,
-        Carbohydrate: Recipe.Carbohydrate,
-        Fat: Recipe.Fat,
-        Protein: Recipe.Protein
-      })
-    } catch (error) { console.log(error) }
-  }
-
-  public async AddMenu(Menu: InterMenu) {
-    try {
-      const docRef = await setDoc(doc(this.db, "Menus", "" + Menu.IdMenu), {
-        IdMenu: Menu.IdMenu,
-        Breakfast: Menu.Breakfast,
-        Lunch: Menu.Lunch,
-        Meal: Menu.Meal,
-        Snack: Menu.Snack,
-        Dinner: Menu.Dinner,
-        Refreshment: Menu.Refreshment
-      })
-    } catch (error) { console.log(error) }
-  }
-  public async CreateUser(Id:string,User:string,Password:string,IdClient:number){
-    try {
-      const docRef = await setDoc(doc(this.db, "User",Id), {
-        IdUser: Id,
-        IdClient: IdClient,
-        User: User,
-        Password: Password,
-      })
-    } catch (error) { console.log(error) }
-  }
-  public async GetUser(User:string,Password:string){
-    try {
-      const docRef = await getDocs(collection(this.db, "User"))
-      let range:boolean=false
-      let flag:boolean=false
-      for (let Element of docRef.docs) {
-        if(Element.data()['User']==User){
-          if(Element.data()['Password']==Password){
-            this.bd.User=Element.data()['IdClient']
-            flag=true
-            console.log("informacion cliente")
-            console.log(Element.data()['IdClient'])
-            //if the range
-            
-          }
-        }
+      let InformationRecipe={
+        Id:NewRecipe.IdRecipes,
+        Carbohydrate: NewRecipe.Carbohydrate,
+        Name: NewRecipe.Name,
+        Fat: NewRecipe.Fat,
+        Ingredinets: NewRecipe.Ingredinets,
+        Procedure: NewRecipe.Procedure,
+        Protein: NewRecipe.Protein
       }
-      if(flag){
-        if(range){
-          return this.router.navigate(["/homeNutritionist"])
-        }else{
-          return this.router.navigate(['/homeClient'])
-        }
-      }else{
-        this.UserPasswordIncorrectAlert()
-        return 0
-      }      
-    } catch (error) { return "hay un error" }
+      let Url:string="https://updaterecipe-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,InformationRecipe)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
   }
+  public UpDateInformationClient(Infomation: any):Observable<any> {
+    try {
+      let Url:string="https://updateinformationclient-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,Infomation)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public UpDateExtraInformation(Information: any):Observable<any> {
+    try {
+      let Url:string="https://updateextrainformation-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,Information)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public UpDateInformationMenuDay(Information:any):Observable<any>{
+    try {
+      let Url:string="https://updatemenuday-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,Information)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  //DELATE
+  public DeleteRecipes(Id: number):Observable<any> {
+    try {
+
+      let NumerId={
+        Id:Id
+      }
+
+      let Url:string="https://deleterecipe-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,NumerId)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public DelateClientInformation(id:number):Observable<any>{
+    try {
+
+      let NumerId={
+        Id:id
+      }
+      console.log("Informacion Id:"+NumerId.Id)
+      let Url:string="https://deleteclientinforamtion-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,NumerId)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public DelateClientExtraInforamtion(id:number):Observable<any>{
+    try {
+
+      let NumerId={
+        Id:id
+      }
+      console.log("Informacion EXTRA Id:"+NumerId.Id)
+      let Url:string="https://deleteextrainformation-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,NumerId)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+  public DelateMenuDay(Id: number,User:InterClient):Observable<any> {
+    try {
+      let NumerId={
+        Id:Id
+      }
+      let Url:string="https://deletemenuday-pycjk7zayq-uc.a.run.app"
+      let varreturn=this.Http.post<any>(Url,NumerId)
+
+      this.ModificateMenuClient(User,User.IdClient).subscribe((res)=>{
+        return res
+      })
+      return varreturn
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+
+  public DelateClientMENUS(ArrayMenus:number[]):Observable<any>{
+    try {
+      let Url:string="https://deleteclientmenus-pycjk7zayq-uc.a.run.app"
+      return this.Http.post<any>(Url,ArrayMenus)
+    } catch (error) { 
+      let InformationError:any=error
+      return InformationError
+    }
+  }
+
+
+  //
   public async UserPasswordIncorrectAlert() {
     const alert = await this.alertController.create({
       header: 'Usuario o Contraseña Incorrecta',
@@ -173,215 +356,13 @@ export class FirebaseService {
     password.textContent=""
   }
 
-  public async GetRecipes() {
-    try {
-      let arrayDocument: any[] = []
-      const docRef = await getDocs(collection(this.db, "Recipes"))
-      for (let Element of docRef.docs) {
-        arrayDocument.push(Element.data())
-      }
-      return arrayDocument
-    } catch (error) { return "hay un error" }
+    
+  
+  
+  
+  
+  
 
-  }
-
-  public async GetClients() {
-    try {
-      let arrayDocument: any[] = []
-      const docRef = await getDocs(collection(this.db, "Clients"))
-      for (let Element of docRef.docs) {
-        arrayDocument.push(Element.data())
-      }
-      return arrayDocument
-    } catch (error) { return "hay un error" }
-
-  }
-  public async GetClient(Id:number) {
-    try {
-      let arrayDocument: any
-      const docRef = doc(this.db, "Clients",Id.toString())
-      const docSnap = await getDoc(docRef);
-      arrayDocument = docSnap.data()
-      return arrayDocument
-    } catch (error) { return "hay un error" }
-
-  }
-
-  public async GetExtraInformationClient(id: number) {
-    try {
-      let arrayDocument: any
-      const docRef = doc(this.db, "ClientInformation", "" + id);
-      const docSnap = await getDoc(docRef);
-      arrayDocument = docSnap.data()
-      return arrayDocument
-    } catch (error) { return "hay un error" }
-
-  }
-  public async GetMenus(id: number) {
-    try {
-      let arrayDocument: any
-      const docRef = doc(this.db, "Menus", "" + id);
-      const docSnap = await getDoc(docRef);
-      arrayDocument = docSnap.data()
-      return arrayDocument
-    } catch (error) { return "hay un error" }
-
-  }
-  public async GetAllMenus() {
-    try {
-      let arrayDocument: any[] = []
-      const docRef = await getDocs(collection(this.db, "Menus"))
-      for (let Element of docRef.docs) {
-        arrayDocument.push(Element.data())
-      }
-      return arrayDocument
-    } catch (error) { return "hay un error" }
-
-  }
-  public async ModificateMenus(Element: string, value: string, Id: number) {
-    try {
-      const updateData: any = {};
-      updateData[Element] = value
-      const batch = writeBatch(this.db);
-      const sfRef = doc(this.db, "Menus", "" + Id);
-      await batch.update(sfRef, updateData);
-      await batch.commit();
-    } catch (error) { }
-  }
-  public async ModificateMenuClient(User: InterClient,Id:number ) {
-    try {
-      const batch = writeBatch(this.db);
-      const sfRef = doc(this.db, "Clients", "" + Id);
-      await batch.update(sfRef, {
-        Menus:{
-          "Friday":User.Menus.Friday,
-          "Monday":User.Menus.Monday,
-          "Saturday":User.Menus.Saturday,
-          "Sunday":User.Menus.Sunday,
-          "Thursday":User.Menus.Thursday,
-          "Tuesday":User.Menus.Tuesday,
-          "Wednesday":User.Menus.Wednesday
-        }
-      });
-      await batch.commit();
-    } catch (error) { }
-  }
-  public async UpdateRecipe(NewRecipe: InterRecipes) {
-    try {
-      const batch = writeBatch(this.db);
-      const sfRef = doc(this.db, "Recipes", "" + NewRecipe.IdRecipes);
-      await batch.update(sfRef, {
-        "Carbohydrate": NewRecipe.Carbohydrate,
-        "Name": NewRecipe.Name,
-        "Fat": NewRecipe.Fat,
-        "Ingredinets": NewRecipe.Ingredinets,
-        "Procedure": NewRecipe.Procedure,
-        "Protein": NewRecipe.Protein
-      });
-      await batch.commit();
-    } catch (error) { }
-  }
-  public async DelateRecipes(Id: number) {
-    try {
-      const batch = writeBatch(this.db);
-      const laRef = doc(this.db, "Recipes", "" + Id);
-      batch.delete(laRef);
-      await batch.commit();
-    } catch (error) { }
-  }
-  public async DelateMenuDay(Id: number,User:InterClient) {
-    try {
-      const batch = writeBatch(this.db);
-      const laRef = doc(this.db, "Menus", "" + Id);
-      batch.delete(laRef);
-      await batch.commit();
-      this.ModificateMenuClient(User,User.IdClient)
-    } catch (error) { }
-  }
-  public async DelateClientMENUS(ArrayMenus:number[]){
-    try {
-      console.log("arrays, ids a borrar")
-      for(let id of ArrayMenus){
-        console.log(id)
-        const batch = writeBatch(this.db);
-        const laRef = doc(this.db, "Menus", id.toString());
-        batch.delete(laRef);
-        await batch.commit();
-      }
-    } catch (error) { console.log(error) }
-  }
-  public async DelateClientInformation(id:number){
-    try {
-      console.log("cliente borrado")
-        console.log(id)
-        const batch = writeBatch(this.db);
-        const laRef = doc(this.db, "Clients", id.toString());
-        batch.delete(laRef);
-        await batch.commit();
-    } catch (error) { console.log(error) }
-  }
-  public async DelateClientExtraInforamtion(id:number){
-    try {
-      console.log("cliente borrado")
-        console.log(id)
-        const batch = writeBatch(this.db);
-        const laRef = doc(this.db, "ClientInformation", id.toString());
-        batch.delete(laRef);
-        await batch.commit();
-    } catch (error) { console.log(error) }
-  }
-  public async UpDateInformationClient(Infomation: any) {
-    try {
-      const batch = writeBatch(this.db);
-      const sfRef = doc(this.db, "Clients", "" + Infomation.Id);
-      await batch.update(sfRef, {
-        "Name": Infomation.Name,
-        "LastName": Infomation.LastName,
-        "Phone": Infomation.Phone
-      });
-      await batch.commit();
-    } catch (error) { }
-  }
-  public async UpDateExtraInformation(Information: any) {
-    try {
-      const batch = writeBatch(this.db);
-      const sfRef = doc(this.db, "ClientInformation", "" + Information.Id);
-      await batch.update(sfRef, {
-        "TargetWeight": Information.TargetWeight,
-        "ActualWeight": Information.ActualWeight,
-        "Height": Information.Height,
-        "Waist": Information.Waist,
-        "Hip": Information.Hip,
-        "Arms": Information.Arms,
-        "Chest": Information.Chest,
-        "Thigh": Information.Thigh,
-        Weights: {
-          "StarWeight":Information.Weights.StarWeight,
-          "Weight3": Information.Weights.Weight3,
-          "Weight2": Information.Weights.Weight2,
-          "Weight1": Information.Weights.Weight1,
-          "LastWeight": Information.Weights.LastWeight,
-        }
-      });
-      await batch.commit();
-    } catch (error) { }
-  }
-
-  public async UpDateInformationMenuDay(Information:any){
-    try {
-      const batch = writeBatch(this.db);
-      const sfRef = doc(this.db, "Menus", "" + Information.IdMenu);
-      await batch.update(sfRef, {
-        "IdMenu": Information.IdMenu,
-        "Breakfast": Information.Breakfast,
-        "Dinner": Information.Dinner,
-        "Lunch": Information.Lunch,
-        "Meal": Information.Meal,
-        "Refreshment": Information.Refreshment,
-        "Snack": Information.Snack
-      });
-      await batch.commit();
-    } catch (error) { }
-  }
+  
 
 }

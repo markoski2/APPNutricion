@@ -36,6 +36,11 @@ export class InformationClientPage implements OnInit {
     Weight2:80,
     Weight1:80,
     LastWeight:80,
+    DateStar:"0/00/0000",
+    Date3:"0/00/0000",
+    Date2:"0/00/0000",
+    Date1:"0/00/0000",
+    DateLast:"0/00/0000",
   }
   }
   constructor(private router:Router,
@@ -43,7 +48,8 @@ export class InformationClientPage implements OnInit {
     private Firebase:FirebaseService,
     private alertController:AlertController,
     private Bar:ElementsService,
-    private Preference:PreferenceService) { }
+    private Preference:PreferenceService,
+    private Elements:ElementsService) { }
 
   ngOnInit() {
     this.GetInformation()
@@ -55,7 +61,11 @@ export class InformationClientPage implements OnInit {
     this.char=new Chart(this.someInput.nativeElement, {
       type: 'line',
       data: {
-        labels: ['Inicial', '01/01/0001', '01/01/0001', '01/01/0001', '01/01/0001'],
+        labels: [this.ExtraInformation.Weights.DateStar,
+           this.ExtraInformation.Weights.Date3,
+           this.ExtraInformation.Weights.Date2, 
+           this.ExtraInformation.Weights.Date1,
+           this.ExtraInformation.Weights.DateLast],
         datasets: [
           {
             label: 'Pesos',
@@ -98,9 +108,14 @@ export class InformationClientPage implements OnInit {
   private async GetInformation(){
     var cosa:any=this.bd.InformationClient
     this.User=cosa
-    var Extra:any=await this.Firebase.GetExtraInformationClient(this.bd.InformationClient!.IdClientInformation)
-    this.ExtraInformation=Extra
-    this.graph()
+    await this.Firebase.GetExtraInformationClient(cosa.IdClientInformation).subscribe(res=>{
+      if(res){
+        this.ExtraInformation=res
+        this.graph()
+      }
+    })
+
+    
   }
   //Menu
   public async ShowMenu(){
@@ -140,6 +155,7 @@ export class InformationClientPage implements OnInit {
   }
   //Delate all information
   private async searchMenuforDelate(){
+    this.Elements.ElementLoading('TagHeader')
     let ArrayDelateMenus:number[]=[]
     if(this.User.Menus.Friday!=0){
       ArrayDelateMenus.push(this.User.Menus.Friday)
@@ -162,11 +178,30 @@ export class InformationClientPage implements OnInit {
     if(this.User.Menus.Wednesday!=0){
       ArrayDelateMenus.push(this.User.Menus.Wednesday)
     }
-    await this.Firebase.DelateClientMENUS(ArrayDelateMenus).finally(()=>{
-      this.Firebase.DelateClientInformation(this.User.IdClient)
-      this.Firebase.DelateClientExtraInforamtion(this.User.IdClientInformation).finally(()=>{
-        this.router.navigate(['/homeNutritionist']).finally(() => { window.location.reload() })
-      })
+    await this.Firebase.DelateClientMENUS(ArrayDelateMenus).subscribe(async(res)=>{
+      if(res.Flag){
+        console.log("Se elimino menus")
+        await this.Firebase.DelateClientInformation(this.User.IdClient).subscribe(async(res)=>{
+          if(res.Flag){
+            console.log("Se elimino cliente")
+            await this.Firebase.DelateClientExtraInforamtion(this.User.IdClientInformation).subscribe(async(res)=>{
+              if(res.Flag){
+                console.log("Se elimino extra")
+                this.Elements.RemoveLoad()
+                this.router.navigate(['/homeNutritionist']).finally(() => { window.location.reload() })
+              }else{
+                console.log("Error al borrar")
+              }
+            })
+          }else{
+            console.log("Error al borrar")
+          }
+        })
+        
+      }else{
+        console.log("Error al borrar")
+      }
+      
     })
     let ArrayPreference:InterClient[]= await this.Preference.Get()
       let NewArrayPreference:InterClient[]=[]
@@ -217,6 +252,7 @@ export class InformationClientPage implements OnInit {
         {
           text:"Guardar",
           handler:(date)=>{
+            this.Elements.ElementLoading('TagHeader')
           this.ChangeDateInformationPersonal(date.Name,date.LastName,date.Phone)
           }
         }],
@@ -226,12 +262,16 @@ export class InformationClientPage implements OnInit {
 
   private async ChangeDateInformationPersonal(Name:string,LastName:string,Phone:number){
     let NewInforamtion={Id:this.User.IdClient,Name:Name,LastName:LastName,Phone:Phone}
-    await this.Firebase.UpDateInformationClient(NewInforamtion).finally(()=>{
-      this.modificatePreference(Name,Phone,this.User.IdClient)
-      this.Bar.UpdateClientToast()
-      this.router.navigate(['/homeNutritionist']).finally(()=>{
-        window.location.reload()
-      })
+    await this.Firebase.UpDateInformationClient(NewInforamtion).subscribe(async(res)=>{
+      if(res.Flag){
+        await this.modificatePreference(Name,Phone,this.User.IdClient)
+        this.Bar.UpdateClientToast()
+        this.Elements.RemoveLoad()
+        this.router.navigate(['/homeNutritionist']).finally(()=>{
+          window.location.reload()
+        })
+      }
+      
     })
     
   }
@@ -335,6 +375,9 @@ export class InformationClientPage implements OnInit {
         {
           text:"Guardar",
           handler:(date)=>{
+            this.Elements.ElementLoading('TagHeader')
+            let Time=new Date()
+            let DateNow=Time.getDate()+"/"+(Time.getMonth()+1)+"/"+Time.getFullYear()
             let NewInfomation={
               Id:this.ExtraInformation.IdClientInformation,
               TargetWeight: date.TargetWeight,
@@ -351,6 +394,11 @@ export class InformationClientPage implements OnInit {
                 Weight2:this.ExtraInformation.Weights.Weight1,
                 Weight1:this.ExtraInformation.Weights.LastWeight,
                 LastWeight:date.ActualWeight,
+                DateStar:this.ExtraInformation.Weights.DateStar,
+                Date3:this.ExtraInformation.Weights.Date2,
+                Date2:this.ExtraInformation.Weights.Date1,
+                Date1:this.ExtraInformation.Weights.DateLast,
+                DateLast:DateNow
               }
             }
           this.ChangeDateExtraInformation(NewInfomation)
@@ -360,11 +408,14 @@ export class InformationClientPage implements OnInit {
     await alert.present();
   } 
   private async ChangeDateExtraInformation(NewInfomation:any){
-    await this.Firebase.UpDateExtraInformation(NewInfomation).finally(()=>{
-      this.Bar.UpdateClientToast()
-      this.router.navigate(['/homeNutritionist']).finally(()=>{
-        window.location.reload()
-      })
+    await this.Firebase.UpDateExtraInformation(NewInfomation).subscribe((res)=>{
+      if(res.Flag){
+        this.Elements.RemoveLoad()
+        this.Bar.UpdateClientToast()
+        this.router.navigate(['/homeNutritionist']).finally(()=>{
+          window.location.reload()
+        })
+      }
     })
   }
   //

@@ -146,7 +146,9 @@ export class HomePage implements OnInit {
     }
     if(IdMenu!=0){
       console.log("entro if para los menus")
-      this.MenuDay=await this.Firebase.GetMenus(IdMenu)
+      await this.Firebase.GetMenu(IdMenu).subscribe(res=>{
+        this.MenuDay=res
+      })
     }else{
       this.flagShowMenu=true
     }
@@ -156,6 +158,5 @@ export class HomePage implements OnInit {
   public SingOff(){
     this.route.navigate(['/home'])
   }
-
 
 }

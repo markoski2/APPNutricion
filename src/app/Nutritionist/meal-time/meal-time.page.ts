@@ -41,6 +41,7 @@ export class MealTimePage implements OnInit {
     Dinner: 0,
     Refreshment: 0
   }
+  ArraySaveAllMenus:InterMenu[]=[]
   MenusDays = {
     MONDAY: 0,
     TUESDAY: 0,
@@ -54,6 +55,7 @@ export class MealTimePage implements OnInit {
   name!: string;
   RecipesShow:number=0
   CopyRecipes:InterRecipes[]=[]
+  SeeRecipeFlag:boolean=true
 
   constructor(private User: GenerationUserService,
     private alertController: AlertController,
@@ -66,20 +68,38 @@ export class MealTimePage implements OnInit {
     this.GetRecipes()
     this.CheckNewDayMenu()
   }
-
+//Primary buttons 
   public async BtnSave() {
+    this.Elemento.ElementLoading('TagHeader')
     await this.AddMenuDayToInformationClient()
-    if(this.FlagNewMenu){
-      await this.Firebase.ModificateMenuClient(this.InformationClient!,this.InformationClient!.IdClient).finally(()=>{
-        this.Elemento.UpdateClientToast()
-        this.router.navigate(['/homeNutritionist']).finally(() => { window.location.reload() })
-      })
-    }else{
-      await this.Firebase.AddDate(this.InformationClient!)
-      await this.Firebase.AddExtraInformation(this.ExtraInformationClient!).finally(() => {
-        this.User.CreateUser(this.InformationClient!.Name, this.InformationClient!.LastName,this.InformationClient!.IdClient)
-      })
-    }
+    await this.Firebase.AddMenu(this.ArraySaveAllMenus).subscribe(async (res)=>{
+      if(res.flag){
+        if(this.FlagNewMenu){
+          await this.Firebase.ModificateMenuClient(this.InformationClient!,this.InformationClient!.IdClient).subscribe((res)=>{
+            if(res.ResFlag){
+              this.Elemento.UpdateClientToast()
+              this.Elemento.RemoveLoad()
+              this.router.navigate(['/homeNutritionist']).finally(() => { window.location.reload() })
+            }
+          })
+        }else{
+          await this.Firebase.AddDate(this.InformationClient!).subscribe(async (res)=>{
+            if(res.Flag){
+              await this.Firebase.AddExtraInformation(this.ExtraInformationClient!).subscribe(async(res) => {
+                if(res.Flag){
+                  await this.User.CreateUser(this.InformationClient!.Name, this.InformationClient!.LastName,this.InformationClient!.IdClient)
+                }
+              })
+            }
+          })
+          
+        }
+      }
+    })
+    
+  }
+  public async BtnCancel(){
+    this.router.navigate(['/homeNutritionist'])
   }
 
   private AddMenuDayToInformationClient() {
@@ -121,7 +141,7 @@ export class MealTimePage implements OnInit {
       Dinner: this.MealTime[4].Id,
       Refreshment: this.MealTime[5].Id
     }
-    await this.Firebase.AddMenu(this.Menu)
+    this.ArraySaveAllMenus.push(this.Menu)
   }
 
   private SaveMenuDay() {
@@ -201,12 +221,29 @@ export class MealTimePage implements OnInit {
   }
 
   private async GetRecipes() {
-    var GetRecipe: any = await this.Firebase.GetRecipes()
-    this.Recipes = GetRecipe
-    this.CopyRecipes=GetRecipe
-    for (let index = 0; index < 5; index++) {
-      this.Array.push(this.Recipes[index])
-    }
+    
+    await this.Firebase.GetRecipes().subscribe(res=>{
+      console.log(res)
+      if(res!=null){
+        this.Recipes = res
+        this.CopyRecipes = res
+        this.SeeRecipeFlag=true
+        console.log("entro en recetas encontradas")
+        if(this.SeeRecipeFlag&&this.Recipes!=null){
+          console.log("entro if ")
+          for (let index = 0; index < 5; index++) {
+            console.log("entro for")
+            this.Array.push(this.Recipes[index])
+          }
+        }
+      }else{
+        console.log("no hya recetas")
+        this.SeeRecipeFlag=false
+      }
+    })
+    
+    console.log("salio firebase")
+    
   }
   //
 
@@ -248,14 +285,21 @@ export class MealTimePage implements OnInit {
     }
   }
   //Days of the week
-  public EnableBtnChooseRecipes(event: any, Id: string) {
-    var RecipesChoose = document.getElementById("" + Id)!
-    if (event.detail.checked) {
-      RecipesChoose.style.display = "flex"
-    } else {
-      RecipesChoose.style.display = "none"
-      this.ChangeColorBtnDay(Id, false)
+  public EnableBtnChooseRecipes(event: any, Id: string,IdToggle:string) {
+    if(this.SeeRecipeFlag){
+      var RecipesChoose = document.getElementById("" + Id)!
+      if (event.detail.checked) {
+        RecipesChoose.style.display = "flex"
+      } else {
+        RecipesChoose.style.display = "none"
+        this.ChangeColorBtnDay(Id, false)
+      }
+    }else{
+      this.Elemento.AlertNoneRecipe()
+      var resetToggle = document.getElementById(IdToggle)!
+      resetToggle.setAttribute("checked","false")
     }
+    
   }
   private ChangeColorBtnDay(IdBtn: string, flag: boolean) {
     var btn = document.getElementById(IdBtn)
@@ -300,6 +344,7 @@ export class MealTimePage implements OnInit {
   public OpenModalChooseRecipes(Opc: number) {
     this.ModalOpenMealTime = true
     this.Day = Opc
+    
   }
 
   //Modal Select recipe
@@ -395,7 +440,9 @@ export class MealTimePage implements OnInit {
   }
   private PutCheckOptionesDay(){
     let CheckDay:any
+    console.log(this.InformationClient)
     if(this.InformationClient?.Menus.Monday!=0){
+      
       CheckDay=document.getElementById("CheckLunes")
       CheckDay.checked=true
       CheckDay.disabled=true

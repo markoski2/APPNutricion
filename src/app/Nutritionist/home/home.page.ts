@@ -22,6 +22,7 @@ export class HomePage implements OnInit {
   ArrayRecipes:InterRecipes[]=[]
   CopyRecipes:InterRecipes[]=[]
   RecipesShow:number=0
+  SeeRecipeFlag:boolean=true
 
   @ViewChild(IonModal) modal!: IonModal;
   ModalOpen: boolean = false
@@ -77,8 +78,13 @@ export class HomePage implements OnInit {
       
     })
     document.getElementById("SeeRecipe")?.addEventListener("click",()=>{
-      this.PushArrayRecipe()
-      this.ModalOpen=true;
+      if(this.SeeRecipeFlag){
+        this.PushArrayRecipe()
+        this.ModalOpen=true;
+      }else{
+        this.Elemento.AlertNoneRecipe()
+      }
+      
     })
     
   }
@@ -111,11 +117,15 @@ export class HomePage implements OnInit {
   }
 
   private async GetsUsers(){
-    let Users:any= await this.Firebase.GetClients()
-    this.ArrayUser=Users
-    this.PushArrayClients()//Put five elements in the array 
+    this.Elemento.ElementLoading('elemtHeader')
+    await this.Firebase.GetClients().subscribe(res=>{
+      this.ArrayUser=res
+        this.PushArrayClients()//Put five elements in the array 
+        this.Elemento.RemoveLoad()
+    })
     //this.DeleteDatePreference()
     this.GetRecents()//Get CLIENTS of the preference
+    
   }
 
   private PushArrayClients(){
@@ -198,8 +208,15 @@ export class HomePage implements OnInit {
     this.ModalOpen = false
   }
   private async GetRecipes(){
-    let Dates:any=await this.Firebase.GetRecipes()
-    this.CopyRecipes=Dates
+    await this.Firebase.GetRecipes().subscribe(res=>{
+      if(res.length>0){
+        this.CopyRecipes=res
+        this.SeeRecipeFlag=true
+      }else{
+        this.SeeRecipeFlag=false
+      }
+    })
+    
     
   }
   private PushArrayRecipe(){
@@ -318,7 +335,9 @@ export class HomePage implements OnInit {
     
   }
   private async DelateRecipeAllBD(Id:number){
-    await this.Firebase.DelateRecipes(Id)
+    await this.Firebase.DeleteRecipes(Id).subscribe(res=>{
+      
+    })
     let ArrayMenus:any=await this.Firebase.GetAllMenus()
     let ArrayMenusCopia:InterMenu[]=ArrayMenus
     //Seach all Menu with content the Recipe

@@ -38,6 +38,9 @@ p{
     display: flex;
     flex-direction: column;
 }
+.FlexCenter{
+    justify-content: center;
+}
 .flexBetween{
     justify-content: space-between;
 }

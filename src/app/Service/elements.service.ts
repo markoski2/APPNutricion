@@ -59,5 +59,47 @@ export class ElementsService {
     });
     await toast.present();
   }
+
+  public async AlertNoneRecipe(){
+    const alert = await this.alertController.create({
+      message: 'No Se Encontraron Recetas Disponibles',
+      htmlAttributes: {
+        'aria-label': 'alert dialog',
+      },
+      buttons :[
+        {
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {},
+        }]
+    });
+    await alert.present();
+  }
+
+  public async ElementLoading(ElementFather:string){
+    let BackgroundLoad=document.createElement("div")
+    BackgroundLoad.style.background="rgb(127,127,127,50%)";
+    BackgroundLoad.style.width="100%"
+    BackgroundLoad.style.height="100%"
+    BackgroundLoad.style.position="fixed"
+    BackgroundLoad.style.display="flex"
+    BackgroundLoad.style.justifyContent="center"
+    BackgroundLoad.style.alignItems="center"
+    BackgroundLoad.id="ElementLoad"
+
+    let ImgLoad=document.createElement('img');
+    ImgLoad.src="./../../assets/icon/IconLoad2.gif";
+    ImgLoad.style.width="200px";
+    ImgLoad.style.height="200px";
+
+    BackgroundLoad.appendChild(ImgLoad)
+    let Father=document.getElementById(ElementFather)
+    Father?.appendChild(BackgroundLoad)
+
+  }
+  public async RemoveLoad(){
+    let elementLoad=document.getElementById('ElementLoad')
+    elementLoad?.remove()
+  }
   
 }

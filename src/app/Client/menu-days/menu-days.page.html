@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" id="TagHeader" >
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button default-href="homeClient"></ion-back-button>
@@ -13,7 +13,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  @if(Nothing){
+    <div class="FlexCenter">
+      <h2>No Se Encontro Información </h2>
+    </div>
+    
+  }
   <div class="FlexCenter background">
+    
     @for (item of Menus; track $index) {
       <div class="card ">
         <p (click)="ShowOptions(item,$index)" class="flexJustifyCenter">{{Days[$index]}}</p>

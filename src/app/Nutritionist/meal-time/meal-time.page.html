@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" id="TagHeader">
   <ion-toolbar>
     <ion-title>Horario de comida</ion-title>
   </ion-toolbar>
@@ -9,42 +9,42 @@
   <div class="marginmain">
     <div class="FlexInline widthContentOption FlexSpace">
       <p>Lunes</p>
-      <ion-toggle id="CheckLunes" (ionChange)="EnableBtnChooseRecipes($event,'Recipes1')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-toggle id="CheckLunes" (ionChange)="EnableBtnChooseRecipes($event,'Recipes1','CheckLunes')" aria-label="Success toggle" color="success" ></ion-toggle>
       <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes(0)" id="Recipes1" size="small">Escoger Receta</ion-button>
     </div>
     <div class="FlexInline widthContentOption FlexSpace">
       <p>Martes</p>
-      <ion-toggle id="CheckMartes" (ionChange)="EnableBtnChooseRecipes($event,'Recipes2')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-toggle id="CheckMartes" (ionChange)="EnableBtnChooseRecipes($event,'Recipes2','CheckMartes')" aria-label="Success toggle" color="success" ></ion-toggle>
       <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes(1)"  id="Recipes2" size="small">Escoger Receta</ion-button>
     </div>
     <div class="FlexInline widthContentOption FlexSpace">
       <p>Miercoles</p>
-      <ion-toggle id="CheckMiercoles" (ionChange)="EnableBtnChooseRecipes($event,'Recipes3')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-toggle id="CheckMiercoles" (ionChange)="EnableBtnChooseRecipes($event,'Recipes3','CheckMiercoles')" aria-label="Success toggle" color="success" ></ion-toggle>
       <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes(2)" id="Recipes3" size="small">Escoger Receta</ion-button>
     </div>
     <div class="FlexInline widthContentOption FlexSpace">
       <p>Jueves</p>
-      <ion-toggle id="CheckJueves" (ionChange)="EnableBtnChooseRecipes($event,'Recipes4')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-toggle id="CheckJueves" (ionChange)="EnableBtnChooseRecipes($event,'Recipes4','CheckJueves')" aria-label="Success toggle" color="success" ></ion-toggle>
       <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes(3)" id="Recipes4" size="small">Escoger Receta</ion-button>
     </div>
     <div class="FlexInline widthContentOption FlexSpace">
       <p>Viernes</p>
-      <ion-toggle id="CheckViernes" (ionChange)="EnableBtnChooseRecipes($event,'Recipes5')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-toggle id="CheckViernes" (ionChange)="EnableBtnChooseRecipes($event,'Recipes5','CheckViernes')" aria-label="Success toggle" color="success" ></ion-toggle>
       <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes(4)" id="Recipes5" size="small">Escoger Receta</ion-button>
     </div>
     <div class="FlexInline widthContentOption FlexSpace">
       <p>Sabado</p>
-      <ion-toggle id="CheckSabado" (ionChange)="EnableBtnChooseRecipes($event,'Recipes6')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-toggle id="CheckSabado" (ionChange)="EnableBtnChooseRecipes($event,'Recipes6','CheckSabado')" aria-label="Success toggle" color="success" ></ion-toggle>
       <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes(5)" id="Recipes6" size="small">Escoger Receta</ion-button>
     </div>
     <div class="FlexInline widthContentOption FlexSpace">
       <p>Domingo</p>
-      <ion-toggle id="CheckDomingo" (ionChange)="EnableBtnChooseRecipes($event,'Recipes7')" aria-label="Success toggle" color="success" ></ion-toggle>
+      <ion-toggle id="CheckDomingo" (ionChange)="EnableBtnChooseRecipes($event,'Recipes7','CheckDomingo')" aria-label="Success toggle" color="success" ></ion-toggle>
       <ion-button class="widthBtn none" (click)="OpenModalChooseRecipes(6)" id="Recipes7" size="small">Escoger Receta</ion-button>
     </div>
   </div>
   <div class="CenterBtn">
-    <ion-button id="BtnPage2" shape="round">Cancelar</ion-button>
+    <ion-button id="BtnPage2" (click)="BtnCancel()" shape="round">Cancelar</ion-button>
     <ion-button id="BtnPageSave" (click)="BtnSave()" shape="round">Guardar</ion-button>
   </div>
   <div><!--MODAL -->
@@ -109,25 +109,31 @@
                       <ion-button color="danger" (click)="CloseModal()">Cerrar</ion-button>
                     </ion-buttons>
                   </ion-toolbar>
-                  <ion-list>
-                    <div class="Flex">
-                      <input class="InputSearch" placeholder="Buscar Receta" type="search">
-                      <div class="DivImgSearch"><img class="ImgSearch" src="./../../../assets/icon/search.png"></div>
+                  @if(!SeeRecipeFlag){
+                    <div class="Flex FlexCenter">
+                      <h2>No Hay Recetas Disponibles</h2>
                     </div>
-                    <div id="ContentRecipes">
-                      @for (item of Array; track $index) {
-                        <ion-item (click)="SaveRecipes(item)">
-                          <ion-label>
-                            <h2>{{item.Name}}</h2>
-                          </ion-label>
-                        </ion-item>
-                      }
+                  }@else {
+                    <ion-list>
+                      <div class="Flex">
+                        <input class="InputSearch" placeholder="Buscar Receta" type="search">
+                        <div class="DivImgSearch"><img class="ImgSearch" src="./../../../assets/icon/search.png"></div>
+                      </div>
+                      <div id="ContentRecipes">
+                        @for (item of Array; track $index) {
+                          <ion-item (click)="SaveRecipes(item)">
+                            <ion-label>
+                              <h2>{{item.Name}}</h2>
+                            </ion-label>
+                          </ion-item>
+                        }
+                      </div>
+                    </ion-list>
+                    <div class="CenterBtn">
+                      <ion-button class="none" id="BtnModalBack" (click)="BtnModalBack()">Regresar</ion-button>
+                      <ion-button class="" id="BtnModalNext" (click)="BtnModalNext()">Siguiente</ion-button>
                     </div>
-                  </ion-list>
-                  <div class="CenterBtn">
-                    <ion-button class="none" id="BtnModalBack" (click)="BtnModalBack()">Regresar</ion-button>
-                    <ion-button class="" id="BtnModalNext" (click)="BtnModalNext()">Siguiente</ion-button>
-                  </div>
+                  }
                 </ion-content>
               </ng-template>
             </ion-modal>

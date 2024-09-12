@@ -21,6 +21,7 @@ export class MenuDaysPage implements OnInit {
 
   NumberMenus: number[] = []
   Menus: InterMenu[] = []
+  Nothing:boolean=true
   FlagBoolean: InterRecipes[] = []
   Days: string[] = []
   Recipes!: InterRecipes[]
@@ -40,68 +41,117 @@ export class MenuDaysPage implements OnInit {
     }
   }
   private async GetInformationClient() {
+    this.elemento.ElementLoading('TagHeader')
     var information: any = this.information.InformationClient
     this.FlagAddDayMenu=this.information.FlagMenu
-    try {
-      let doc:any=await this.Firebase.GetClient(information.IdClient)
-      this.User = doc
+    /*try {
+      await this.Firebase.GetClient(information.IdClient).subscribe(res=>{
+        if(res){
+          this.User=res
+          console.log("informacion firebase")
+          console.log(res)
+        }
+      })
+      
     } catch (error) {
       this.User = information
-    }
+    }*/
+    this.User = information
     this.GetMenus()
   }
 
   private async GetMenus() {
     this.Days = []
-    if (this.User.Menus.Monday != 0) {
-      this.NumberMenus.push(this.User.Menus.Monday)
-      this.Days.push("Lunes")
-    }
-    if (this.User.Menus.Tuesday != 0) {
-      this.NumberMenus.push(this.User.Menus.Tuesday)
-      this.Days.push("Martes")
-    }
-    if (this.User.Menus.Wednesday != 0) {
-      this.NumberMenus.push(this.User.Menus.Wednesday)
-      this.Days.push("Miercoles")
-    }
-    if (this.User.Menus.Thursday != 0) {
-      this.NumberMenus.push(this.User.Menus.Thursday)
-      this.Days.push("Jueves")
-    }
-    if (this.User.Menus.Friday != 0) {
-      this.NumberMenus.push(this.User.Menus.Friday)
-      this.Days.push("Viernes")
-    }
-    if (this.User.Menus.Saturday != 0) {
-      this.NumberMenus.push(this.User.Menus.Saturday)
-      this.Days.push("Sabado")
-    }
-    if (this.User.Menus.Sunday != 0) {
-      this.NumberMenus.push(this.User.Menus.Sunday)
-      this.Days.push("Domingo")
-    }
+    try {
+      if (this.User.Menus.Monday != 0) {
+        this.NumberMenus.push(this.User.Menus.Monday)
+        this.Days.push("Lunes")
+      }
+      if (this.User.Menus.Tuesday != 0) {
+        this.NumberMenus.push(this.User.Menus.Tuesday)
+        this.Days.push("Martes")
+      }
+      if (this.User.Menus.Wednesday != 0) {
+        this.NumberMenus.push(this.User.Menus.Wednesday)
+        this.Days.push("Miercoles")
+      }
+      if (this.User.Menus.Thursday != 0) {
+        this.NumberMenus.push(this.User.Menus.Thursday)
+        this.Days.push("Jueves")
+      }
+      if (this.User.Menus.Friday != 0) {
+        this.NumberMenus.push(this.User.Menus.Friday)
+        this.Days.push("Viernes")
+      }
+      if (this.User.Menus.Saturday != 0) {
+        this.NumberMenus.push(this.User.Menus.Saturday)
+        this.Days.push("Sabado")
+      }
+      if (this.User.Menus.Sunday != 0) {
+        this.NumberMenus.push(this.User.Menus.Sunday)
+        this.Days.push("Domingo")
+      }
 
-    for (let Element of this.NumberMenus) {
-      this.Menus.push(await this.Firebase.GetMenus(Element))
+      console.log("informacion menu")
+      console.log(this.NumberMenus)
+
+      await this.Firebase.GetMenu(this.NumberMenus).subscribe(async(res)=>{
+        if(res!=null){
+          this.Nothing=false
+          this.Menus=res
+          //this.Menus.push(res)
+          this.elemento.RemoveLoad()
+        }else{
+          this.Nothing=true
+          console.log("No se encontraron datos del menu")
+        }
+      })
+
+      /*for (let Element of this.NumberMenus) {
+        await this.Firebase.GetMenu(Element).subscribe(async(res)=>{
+         if(res!=null){
+           this.Nothing=false
+           this.Menus.push(res)
+           this.elemento.RemoveLoad()
+         }else{
+           this.Nothing=true
+           console.log("No se encontraron datos del menu")
+         }
+         
+        })
+       }*/
+      
+    } catch (error) {
+      this.elemento.RemoveLoad()
+      console.log("Error en la información")
     }
   }
 
   public SetNameCard(idMenu: InterMenu, IdRecipe: string, NameImg: string, index: number) {
 
-    this.SearchRecipe(parseInt(IdRecipe))
+    this.SearchRecipe(IdRecipe)
     this.ChangeImg("" + idMenu.IdMenu, NameImg)
     let Name = document.getElementById("" + idMenu.IdMenu)
     this.FlagBoolean[index] = this.Recipe
     Name!.innerText = this.Recipe.Name
   }
   private async GetRecipes() {
-    var CollectionRecipes: any = await this.Firebase.GetRecipes()
-    this.Recipes = CollectionRecipes
+    this.Nothing=true
+    var CollectionRecipes: any
+    await this.Firebase.GetRecipes().subscribe(res=>{
+      if(res!=null){
+        CollectionRecipes = res
+        this.Recipes = CollectionRecipes
+        console.log("Informacion de firebase")
+        console.log(this.Recipes)
+      }
+      
+    })
+    
   }
-  private SearchRecipe(IdRecipe: number) {
+  private SearchRecipe(IdRecipe: string) {
     for (let Element of this.Recipes) {
-      if (Element.IdRecipes == IdRecipe) {
+      if ((Element.IdRecipes).toString()==IdRecipe) {
         this.Recipe = Element
       }
     }
@@ -171,7 +221,7 @@ export class MenuDaysPage implements OnInit {
           role: 'confirm',
           handler: () => {
             this.ChooseNameDay(this.Days[NumberDay])
-            this.Firebase.DelateMenuDay(item, this.User).finally(() => {
+            this.Firebase.DelateMenuDay(item, this.User).subscribe(() => {
               this.elemento.DelateToast()
               this.route.navigate(['/homeNutritionist'])
             })

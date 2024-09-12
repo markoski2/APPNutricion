@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FirebaseService } from '../Service/firebase.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -9,19 +10,24 @@ import { FirebaseService } from '../Service/firebase.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  constructor(private alertController: AlertController,private router:Router,
-    private Firebase:FirebaseService) {}
-  
-  ngOnInit(){
-    document.getElementById("BtnLogin")?.addEventListener("click",()=>{
-      var user=(document.getElementById("InputUser") as HTMLInputElement).value
-      let password=(document.getElementById("InputPassword") as HTMLInputElement).value
-      this.login(user,password)
+  constructor(private alertController: AlertController, private router: Router,
+    private Firebase: FirebaseService,
+    private http: HttpClient) { }
+
+  ngOnInit() {
+    document.getElementById("BtnLogin")?.addEventListener("click", () => {
+      var user = (document.getElementById("InputUser") as HTMLInputElement).value
+      let password = (document.getElementById("InputPassword") as HTMLInputElement).value
+      this.login(user, password)
     })
   }
 
-  private async login(User:string,Password:string){
-    this.Firebase.GetUser(User,Password)
+  private async login(User: string, Password: string) {
+    this.Firebase.GetUser(User, Password).subscribe(res => {
+      if (res.rol !== null) {
+        this.router.navigate([res.Rol])
+      }
+    })
   }
 
   async presentAlert() {
@@ -56,9 +62,5 @@ export class HomePage implements OnInit {
 
     await alert.present();
   }
-  
-
-  
-
 
 }

@@ -16,7 +16,8 @@ export class CreateClientPage implements OnInit {
   constructor(private alertController: AlertController,
     private router: Router,
     private User: GenerationUserService,
-    private Firebase:FirebaseService ) { }
+    private Firebase:FirebaseService,
+    private Elements:ElementsService ) { }
     inputModel = '';
 
     @ViewChild('InputCellPhone', { static: true }) ionInputEl!: IonInput;
@@ -63,7 +64,12 @@ export class CreateClientPage implements OnInit {
       Weight3: 0,
       Weight2: 0,
       Weight1: 0,
-      LastWeight: 0
+      LastWeight: 0,
+      DateStar:"",
+      Date3:"",
+      Date2:"",
+      Date1:"",
+      DateLast:"",
     }
   }
   Id: string = ""
@@ -112,12 +118,19 @@ export class CreateClientPage implements OnInit {
         {
           text: 'Omitir',
           role: 'cancel',
-          handler: () => {
-            this.Firebase.AddDate(this.InformationClient!).finally(()=>{
-              this.Firebase.AddExtraInformation(this.ExtraInformationClient!)
-              this.User.CreateUser(this.InformationClient!.Name,this.InformationClient!.LastName,this.InformationClient!.IdClient)
+          handler: async () => {
+            this.Elements.ElementLoading("TagHeader")
+            await this.Firebase.AddDate(this.InformationClient!).subscribe(async(res)=>{
+              if(res.Flag){
+                await this.Firebase.AddExtraInformation(this.ExtraInformationClient!).subscribe(async(res)=>{
+                  if(res.Flag){
+                    await this.User.CreateUser(this.InformationClient!.Name,this.InformationClient!.LastName,this.InformationClient!.IdClient)
+                  }
+                })
+              }
             })
-            //this.User.CreateUser(this.InformationClient!.Name,this.InformationClient!.LastName)
+            
+            
           },
         },
         {
@@ -164,6 +177,8 @@ export class CreateClientPage implements OnInit {
     this.InformationClient!.Menus.Wednesday = 0
   }
   private GetInputsPage2() {
+    let Time=new Date()
+    let FormatDate=Time.getDate()+"/"+(Time.getMonth()+1)+"/"+Time.getFullYear()
     this.ExtraInformationClient!.IdClientInformation = parseInt("67" + this.Id)
     this.ExtraInformationClient!.IdClient = parseInt("69" + this.Id)
     this.ExtraInformationClient!.TargetWeight = parseFloat((document.getElementById("Object") as HTMLInputElement).value)
@@ -179,6 +194,11 @@ export class CreateClientPage implements OnInit {
     this.ExtraInformationClient!.Weights.Weight2 = parseFloat((document.getElementById("ActualWeight") as HTMLInputElement).value)
     this.ExtraInformationClient!.Weights.Weight1 = parseFloat((document.getElementById("ActualWeight") as HTMLInputElement).value)
     this.ExtraInformationClient!.Weights.LastWeight = parseFloat((document.getElementById("ActualWeight") as HTMLInputElement).value)
+    this.ExtraInformationClient!.Weights.DateStar=FormatDate
+    this.ExtraInformationClient!.Weights.Date3=FormatDate
+    this.ExtraInformationClient!.Weights.Date2=FormatDate
+    this.ExtraInformationClient!.Weights.Date1=FormatDate
+    this.ExtraInformationClient!.Weights.DateLast=FormatDate
   }
 
 

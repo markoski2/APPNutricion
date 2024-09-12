@@ -31,6 +31,7 @@ export class EditInformationPage implements OnInit {
   ngOnInit() {
     this.GetInformationRecipes()
     document.getElementById("Edit")?.addEventListener("click",()=>{
+      this.Elemento.ElementLoading('TagHeader')
       this.UpdateRecipe()
     })
   }
@@ -41,10 +42,16 @@ export class EditInformationPage implements OnInit {
   }
   private async UpdateRecipe(){
     this.GetInputInformation()
-    await this.Firebase.UpdateRecipe(this.Recipes).finally(()=>{
-      this.Router.navigate(['/homeNutritionist']).finally(()=>{
-        this.Elemento.UpdateRecipeToast()
-      })
+    await this.Firebase.UpdateRecipe(this.Recipes).subscribe((res)=>{
+      if(res.Flag){
+        this.Elemento.RemoveLoad()
+        this.Router.navigate(['/homeNutritionist']).finally(()=>{
+          this.Elemento.UpdateRecipeToast()
+        })
+      }else{
+        this.Elemento.ErrorRecipeToast()
+      }
+      
     })
   }
   private GetInputInformation(){

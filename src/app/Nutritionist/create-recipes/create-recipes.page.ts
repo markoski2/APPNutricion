@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { InterRecipes } from 'src/app/Interface/interfaces.service';
+import { ElementsService } from 'src/app/Service/elements.service';
 import { FirebaseService } from 'src/app/Service/firebase.service';
 import { GenerationUserService } from 'src/app/Service/generation-user.service';
 
@@ -18,9 +19,11 @@ export class CreateRecipesPage implements OnInit {
     private toastController: ToastController,
     private router:Router,
     private Generate:GenerationUserService,
-    private Firebase:FirebaseService) { }
+    private Firebase:FirebaseService,
+    private Elements:ElementsService) { }
 
   ngOnInit() {
+    this.ClearInputs()
     document.getElementById("Add")?.addEventListener("click",()=>{
       if(this.flag){
         this.flag=false
@@ -124,12 +127,16 @@ export class CreateRecipesPage implements OnInit {
   }
 
   private async CheckInformation(){
+    this.Elements.ElementLoading('TagHeader')
+    
     if(this.Recipe.Name&&this.Recipe.Ingredinets&&this.Recipe.Procedure){
       if(this.Recipe.Protein&&this.Recipe.Carbohydrate&&this.Recipe.Fat){
-        this.Firebase.AddNewRecipe(this.Recipe).finally(()=>{
-          this.presentToast()
-          this.ClearInputs()
-          this.router.navigate(['/homeNutritionist'])
+        await this.Firebase.AddNewRecipe(this.Recipe).subscribe((res)=>{
+          if(res.Res){
+            this.presentToast()
+            this.Elements.RemoveLoad()
+            this.router.navigate(['/homeNutritionist']).finally(() => { window.location.reload() })
+          }
         })
       }else{
         this.MissingDates()
@@ -137,6 +144,7 @@ export class CreateRecipesPage implements OnInit {
     }else{
       this.MissingDates()
     }
+    this.Elements.RemoveLoad()
     this.flag=true
   }
   

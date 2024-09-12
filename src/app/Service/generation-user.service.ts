@@ -24,11 +24,28 @@ export class GenerationUserService {
   private IdClient:number=0
   private letters="ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz1234567890"
 
-  public CreateUser(Name:string,LastName:string,Id:number){
+  public async CreateUser(Name:string,LastName:string,Id:number){
     this.IdClient=Id
     this.GenerationUser(Name,LastName)
     this.GenerationPassword()
-    this.KeyUser()
+
+    let IdUser=this.GenerationId()
+    let User:any={
+      IdUser: "85"+IdUser,
+      IdClient: this.IdClient,
+      User: this.User,
+      Password: this.Password,
+    }
+    await this.Firebase.CreateUser(User).subscribe(async(res)=>{
+      if(res.Flag){
+        this.Elemento.RemoveLoad()
+        this.KeyUser()
+      }else{
+        console.log("Error al crear usuario")
+      }
+    })
+
+    
   }
   private async KeyUser() {
     const alert = await this.alertController.create({
@@ -49,11 +66,11 @@ export class GenerationUserService {
           role: 'confirm',
           handler: () => {
             this.Elemento.AddClientToast()
-            let Id=this.GenerationId()
-            this.Firebase.CreateUser("85"+Id,this.User,this.Password,this.IdClient)
-            this.router.navigate(['/homeNutritionist']).finally(()=>{
+            this.router.navigate(["/homeNutritionist"]).finally(()=>{
               window.location.reload()
             })
+            /**/
+            
           },
         },
       ]
